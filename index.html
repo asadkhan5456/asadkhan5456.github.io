@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>My Portfolio</title>
+
+  <!-- Bootstrap CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+
+  <!-- Inline CSS -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Sticky navbar spacing fix (if needed) */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Home Section */
+    #home {
+      height: 100vh; /* Full viewport height */
+      background: url("home/first.jpg") center center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Semi-transparent white box to replicate the mockup style */
+    #home .white-box {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border-radius: 0.25rem;
+      text-align: center;
+    }
+
+    #home h2 {
+      margin: 0;
+      font-size: 2rem;
+      text-transform: uppercase; /* optional, if you want all caps */
+      color: #333; /* dark text to contrast with the light box */
+    }
+
+    #home p {
+      margin: 0;
+      font-size: 1.25rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body id="top">
+  <!-- ========== START OF STICKY NAVIGATION BAR WITH LANGUAGE SWITCHER ========== -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#top">My Portfolio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#top" data-i18n="nav.home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about" data-i18n="nav.about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects" data-i18n="nav.projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills" data-i18n="nav.skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#resume" data-i18n="nav.resume">Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact</a>
+          </li>
+          <!-- Language Switcher Button -->
+          <li class="nav-item">
+            <button id="langToggle" class="btn btn-link nav-link">DE</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- ========== END OF NAVIGATION BAR ========== -->
+
+  <!-- ========== START OF HOME SECTION ========== -->
+  <section id="home">
+    <div class="white-box">
+      <h2>Asad Khan</h2>
+      <p>Data Scientist</p>
+    </div>
+  </section>
+  <!-- ========== END OF HOME SECTION ========== -->
+
+  <!-- ========== START OF ABOUT SECTION ========== -->
+<!-- ========== START OF ABOUT SECTION ========== -->
+<section id="about" class="py-5" style="background-color: #e6eef3;">
+  <div class="container">
+    <!-- Section Heading -->
+    <h2 class="mb-4 text-start" data-i18n="about.heading" style="font-weight: 700;">
+      About Me
+    </h2>
+
+    <div class="row align-items-center">
+      <!-- Text Column -->
+      <div class="col-md-8">
+        <p data-i18n="about.p1" style="text-align: justify;">
+          I'm an AI Engineer and Data Scientist with a passion for turning complex data into
+          compelling stories. With over 4 years of hands-on experience in data analysis,
+          machine learning, and MLOps, I thrive on transforming raw numbers into actionable
+          insights that drive innovation and business growth.
+        </p>
+        <p data-i18n="about.p2" style="text-align: justify;">
+          My professional journey began with a Master’s degree in Information and Electronic
+          Engineering, which laid the foundation for my expertise in data analysis, automation,
+          and real-time process monitoring. Over the years, I've contributed to diverse
+          projects—from developing AI-powered chatbots that streamline production processes
+          at Albert Handtmann Maschinenfabrik GmbH &amp; Co. KG, to crafting robust ML
+          pipelines that unlock hidden patterns in large datasets at Keysight Technologies
+          and Magnificent Data GmbH.
+        </p>
+        <p data-i18n="about.p3" style="text-align: justify;">
+          When I'm not immersed in coding and model building, I enjoy exploring new topics
+          to learn and stay up to date within the community. I often experiment with personal
+          projects that push the boundaries of what's possible with data. My approach is
+          holistic: I start by gathering data, then apply rigorous analysis and machine learning
+          techniques, and finally deliver insights in a form that’s accessible to everyone—from
+          technical teams to business decision-makers.
+        </p>
+        <p data-i18n="about.p4" style="text-align: justify;">
+          I invite you to explore my work in the Portfolio and Resume sections, where you'll
+          find detailed project showcases and a comprehensive overview of my professional
+          achievements. Whether you're here to collaborate, learn, or simply share a passion
+          for data, I believe that the intersection of storytelling and data is where the magic
+          happens. Welcome to my world of data-driven innovation.
+        </p>
+      </div>
+      <!-- Image Column -->
+      <div class="col-md-4 text-center mt-4 mt-md-0">
+        <img
+          src="images/about/1.jpg"
+          alt="Your Personal Picture"
+          class="img-fluid rounded"
+          style="max-width: 100%; height: auto;"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========== END OF ABOUT SECTION ========== -->
+
+  
+  <!-- ========== END OF ABOUT SECTION ========== -->
+
+  <!-- ========== START OF PROJECTS SECTION ========== -->
+  <section id="projects" class="py-5 text-center">
+    <div class="container">
+      <h2 class="mb-4" data-i18n="projects.heading">Projects</h2>
+      <div class="row">
+        <!-- Project 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="images/projects/1.png" class="card-img-top" alt="Project 1">
+            <div class="card-body">
+              <h5 class="card-title" data-i18n="projects.project1.title">Project 1: Predictive Maintenance Solution</h5>
+              <p class="card-text" data-i18n="projects.project1.desc">
+                An end-to-end predictive maintenance solution harnessing sensor data and machine learning to forecast jet engine health and optimize maintenance schedules
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="text-decoration-none" data-i18n="projects.project1.linkText2">Github</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="images/projects/2.jpg" class="card-img-top" alt="Project 2">
+            <div class="card-body">
+              <h5 class="card-title" data-i18n="projects.project2.title">Project 2: BLG log classification using NLP</h5>
+              <p class="card-text" data-i18n="projects.project2.desc">
+                A comprehensive solution that transforms raw BGL logs into actionable insights through advanced NLP, robust API deployment, and interactive PowerBI dashboards
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="text-decoration-none" data-i18n="projects.project2.linkText2">Github</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="images/projects/3.jpg" class="card-img-top" alt="Project 3">
+            <div class="card-body">
+              <h5 class="card-title" data-i18n="projects.project3.title">Project 3: Cold Email Generator using LLM</h5>
+              <p class="card-text" data-i18n="projects.project3.desc">
+                A production-ready Cold Email Generator that scrapes job details from careers pages and leverages LLM to craft personalized outreach emails, all containerized and CI/CD-enabled.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="text-decoration-none" data-i18n="projects.project3.linkText2">Github</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 4 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="images/projects/4.png" class="card-img-top" alt="Project 4">
+            <div class="card-body">
+              <h5 class="card-title" data-i18n="projects.project4.title">GenAI post generator for health content</h5>
+              <p class="card-text" data-i18n="projects.project4.desc">
+                A comprehensive GenAI solution that generates tailored health content through advanced NLP and seamless, containerized deployment.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="text-decoration-none" data-i18n="projects.project4.linkText2">Github</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  
+  <!-- ========== END OF PROJECTS SECTION ========== -->
+
+  <!-- ========== START OF SKILLS SECTION ========== -->
+  <section id="skills" class="py-5 text-center">
+    <div class="container">
+      <h2 class="mb-4" data-i18n="skills.heading">Skills</h2>
+      <div class="row">
+        <!-- Skill 1: Python -->
+        <div class="col-sm-6 col-lg-3 mb-4">
+          <img src="images/skills/1.png" alt="Python Icon" class="mb-3" style="width:80px; height:80px; object-fit:contain;">
+          <h5 data-i18n="skills.skill1.title">Python</h5>
+          <p data-i18n="skills.skill1.desc">
+            Proficient in Python programming with 4+ years of industrial experience in data analysis and machine learning.
+          </p>
+          <a href="certificates/python.pdf" target="_blank" class="text-decoration-none" data-i18n="skills.skill1.certificate">View Certificate</a>
+        </div>
+        <!-- Skill 2: Data Visualization -->
+        <div class="col-sm-6 col-lg-3 mb-4">
+          <img src="images/skills/2.png" alt="Data Visualization Icon" class="mb-3" style="width:80px; height:80px; object-fit:contain;">
+          <h5 data-i18n="skills.skill2.title">Data Visualization</h5>
+          <p data-i18n="skills.skill2.desc">
+            Skilled in creating insightful visualizations using tools like Tableau, PowerBI, and Data Analytics libraries.
+          </p>
+          <a href="certificates/visualization.pdf" target="_blank" class="text-decoration-none" data-i18n="skills.skill2.certificate">View Certificate</a>
+        </div>
+        <!-- Skill 3: SQL -->
+        <div class="col-sm-6 col-lg-3 mb-4">
+          <img src="images/skills/3.png" alt="SQL Icon" class="mb-3" style="width:80px; height:80px; object-fit:contain;">
+          <h5 data-i18n="skills.skill3.title">SQL</h5>
+          <p data-i18n="skills.skill3.desc">
+            Experienced in SQL for data manipulation, extraction, and effective database management.
+          </p>
+          <a href="certificates/sql.pdf" target="_blank" class="text-decoration-none" data-i18n="skills.skill3.certificate">View Certificate</a>
+        </div>
+        <!-- Skill 4: Data Storytelling -->
+        <div class="col-sm-6 col-lg-3 mb-4">
+          <img src="images/skills/4.png" alt="Data Storytelling Icon" class="mb-3" style="width:80px; height:80px; object-fit:contain;">
+          <h5 data-i18n="skills.skill4.title">Data Storytelling</h5>
+          <p data-i18n="skills.skill4.desc">
+            Adept at transforming complex data insights into compelling narratives with clear visualizations.
+          </p>
+          <a href="certificates/analysis.pdf" target="_blank" class="text-decoration-none" data-i18n="skills.skill4.certificate">View Certificate</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <!-- ========== END OF SKILLS SECTION ========== -->
+
+  <!-- ========== START OF CONTACT SECTION ========== -->
+  <section id="contact" class="py-5" style="background-color: #000; color: #fff;">
+    <div class="container text-center">
+      <h2 class="mb-4" data-i18n="contact.heading">Contact Me</h2>
+      <p class="mb-2">
+        <img src="icons/email.png" alt="Email Icon" style="width: 24px; height: 24px; margin-right: 8px;" />
+        <span data-i18n="contact.email">asadfkhan5456@gmail.com</span>
+      </p>
+      <p class="mb-4">
+        <img src="icons/phone.png" alt="Phone Icon" style="width: 24px; height: 24px; margin-right: 8px;" />
+        <span data-i18n="contact.phone">+4915785081141</span>
+      </p>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <div class="d-flex flex-column align-items-center">
+            <div class="mb-2 rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background-color: #E91E63;">
+              <img src="icons/linkedin.png" alt="LinkedIn" style="width: 30px; height: 30px;" />
+            </div>
+            <a href="https://www.linkedin.com/in/ak54/" class="text-white text-decoration-none" data-i18n="contact.linkedin">LinkedIn</a>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="d-flex flex-column align-items-center">
+            <div class="mb-2 rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background-color: #E91E63;">
+              <img src="icons/github.png" alt="GitHub" style="width: 30px; height: 30px;" />
+            </div>
+            <a href="https://github.com/asadkhan5456" class="text-white text-decoration-none" data-i18n="contact.github">GitHub</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ========== END OF CONTACT SECTION ========== -->
+
+  <!-- ========== START OF RESUME SECTION ========== -->
+  <section id="resume" class="py-5">
+    <div class="container">
+      <h2 class="mb-4 text-center" data-i18n="resume.heading">Resume</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="ratio ratio-16x9 mb-3">
+            <iframe id="resumeIframe" src="Asad_Resume_EN.pdf" style="border: 1px solid #ccc;" allowfullscreen></iframe>
+          </div>
+          <div class="text-center">
+            <a id="resumeDownload" href="Asad_Resume_EN.pdf" class="btn btn-primary" target="_blank" download data-i18n="resume.download">Download Resume</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ========== END OF RESUME SECTION ========== -->
+
+<!-- ========== START OF FOOTER SECTION ========== -->
+<footer class="py-4" style="background-color: #AEC7D5; color: #000;">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <!-- Left Column: Basic Info -->
+      <div class="col-auto">
+        <div style="font-weight: 600;">Asad Khan</div>
+        <div>
+          <a
+            href="mailto:asadfkhan5456@gmail.com"
+            class="text-decoration-none text-dark"
+          >
+            asadfkhan5456@gmail.com
+          </a>
+        </div>
+        <div class="small mt-2">
+          <strong>Location:</strong> Germany <br />
+          Open for : On-site, Hybrid and Remote work
+        </div>
+        <div class="small">
+          <strong>KvK:</strong> 68903876
+        </div>
+      </div>
+
+      <!-- Right Column: Icons -->
+      <div class="col-auto">
+        <a href="https://www.linkedin.com/in/ak54/" class="me-2">
+          <img
+            src="icons/linkedin.png"
+            alt="LinkedIn"
+            style="width: 32px; height: 32px;"
+          />
+        </a>
+        <a href="https://github.com/asadkhan5456">
+          <img
+            src="icons/github.png"
+            alt="GitHub"
+            style="width: 32px; height: 32px;"
+          />
+        </a>
+      </div>
+    </div>
+
+    <!-- Horizontal Divider (optional) -->
+    <hr class="my-3" />
+
+    <!-- Footer Bottom Text (Center) -->
+    <div class="row">
+      <div class="col text-center">
+        <small>&copy; 2025 Asad Khan</small>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- ========== END OF FOOTER SECTION ========== -->
+
+
+  <!-- JavaScript for Language Toggle -->
+  <script>
+    const translations = {
+      en: {
+        nav: {
+          home: "Home",
+          about: "About",
+          projects: "Projects",
+          skills: "Skills",
+          resume: "Resume",
+          contact: "Contact"
+        },
+        about: {
+      heading: "About Me",
+      p1: "I'm an AI Engineer and Data Scientist with a passion for turning complex data into compelling stories. With over 4 years of hands-on experience in data analysis, machine learning, and MLOps, I thrive on transforming raw numbers into actionable insights that drive innovation and business growth.",
+      p2: "My professional journey began with a Master’s degree in Information and Electronic Engineering, which laid the foundation for my expertise in data analysis, automation, and real-time process monitoring. Over the years, I've contributed to diverse projects—from developing AI-powered chatbots that streamline production processes at Albert Handtmann Maschinenfabrik GmbH & Co. KG, to crafting robust ML pipelines that unlock hidden patterns in large datasets at Keysight Technologies and Magnificent Data GmbH.",
+      p3: "When I'm not immersed in coding and model building, I enjoy exploring new topic to learn and stay up to date within the community. I often experiment with personal projects that push the boundaries of what's possible with data. My approach is holistic: I start by gathering data, then apply rigorous analysis and machine learning techniques, and finally deliver insights in a form that’s accessible to everyone—from technical teams to business decision-makers.",
+      p4: "I invite you to explore my work in the Portfolio and Resume sections, where you'll find detailed project showcases and a comprehensive overview of my professional achievements. Whether you're here to collaborate, learn, or simply share a passion for data, I believe that the intersection of storytelling and data is where the magic happens. Welcome to my world of data-driven innovation.",
+    },
+    
+      projects: {
+        heading: "Projects",
+        project1: {
+        title: "Project 1: Predictive Maintenance Solution",
+        desc: "An end-to-end predictive maintenance solution harnessing sensor data and machine learning to forecast jet engine health and optimize maintenance schedules",
+        linkText2: "Github"
+      },
+      project2: {
+        title: "Project 2: BLG log classification using NLP",
+        desc: "A comprehensive solution that transforms raw BGL logs into actionable insights through advanced NLP, robust API deployment, and interactive PowerBI dashboards",
+        linkText2: "Github"
+      },
+      project3: {
+        title: "Project 3: Cold Email Generator using LLM",
+        desc: "A production-ready Cold Email Generator that scrapes job details from careers pages and leverages LLM to craft personalized outreach emails, all containerized and CI/CD-enabled.",
+        linkText2: "Github"
+      },
+      project4: {
+        title: "GenAI post generator for health content",
+        desc: "A comprehensive GenAI solution that generates tailored health content through advanced NLP and seamless, containerized deployment.",
+        linkText2: "Github"
+      }
+    },
+    skills: {
+      heading: "Skills",
+      skill1: {
+        title: "Python",
+        desc: "Proficient in Python programming with 4+ year of industrial experience in data analysis and machine learning.",
+        certificate: "View Certificate"
+      },
+      skill2: {
+        title: "Data Visualization",
+        desc: "SSkilled in creating insightful visualizations using tools like Tableau, PowerBI, and Data Analytics libraries",
+        certificate: "View Certificate"
+      },
+      skill3: {
+        title: "SQL",
+        desc: "Experienced in SQL for data manipulation, extraction, and effective database management.",
+        certificate: "View Certificate"
+      },
+      skill4: {
+        title: "Data Storytelling",
+        desc: "Adept at transforming complex data insights into compelling narratives with clear visualizations.",
+        certificate: "View Certificate"
+      }
+    },
+        contact: {
+          heading: "Contact Me",
+          email: "asadfkhan5456@gmail.com",
+          phone: "+4915785081141",
+          linkedin: "LinkedIn",
+          github: "GitHub",
+          twitter: "Twitter",
+          medium: "Medium",
+          youtube: "YouTube"
+        },
+        resume: {
+          heading: "Resume",
+          download: "Download Resume",
+          file: "Asad_Resume_EN.pdf"
+        },
+      },
+      de: {
+        nav: {
+          home: "Startseite",
+          about: "Über mich",
+          projects: "Projekte",
+          skills: "Fähigkeiten",
+          resume: "Lebenslauf",
+          contact: "Kontakt"
+        },
+        about: {
+      heading: "Über mich",
+      p1: "Ich bin ein KI-Ingenieur und Data Scientist mit der Leidenschaft, komplexe Daten in fesselnde Geschichten zu verwandeln. Mit über 4 Jahren praktischer Erfahrung in der Datenanalyse, im maschinellen Lernen und im MLOps-Bereich liebe ich es, aus rohen Zahlen handlungsrelevante Erkenntnisse zu gewinnen, die Innovationen und Geschäftswachstum vorantreiben.",
+      p2: "Meine berufliche Laufbahn begann mit einem Master-Abschluss in Informations- und Elektrotechnik, der mir das Fundament für meine Expertise in der Datenanalyse, Automatisierung und Echtzeit-Prozessüberwachung legte. Im Laufe der Jahre habe ich an vielfältigen Projekten mitgewirkt – von der Entwicklung KI-gestützter Chatbots, die Produktionsprozesse bei der Albert Handtmann Maschinenfabrik GmbH & Co. KG optimieren, bis hin zum Aufbau robuster ML-Pipelines, die verborgene Muster in großen Datensätzen bei Keysight Technologies und Magnificent Data GmbH aufdecken.",
+      p3: "Wenn ich mich nicht gerade mit Programmierung und Modellbau beschäftige, erkunde ich gerne neue Themen, um zu lernen und in der Community auf dem Laufenden zu bleiben. Ich experimentiere oft mit persönlichen Projekten, die die Grenzen dessen, was mit Daten möglich ist, verschieben. Mein Ansatz ist ganzheitlich: Ich beginne mit dem Sammeln von Daten, wende dann rigorose Analyse- und maschinelle Lerntechniken an und stelle schließlich Erkenntnisse in einer Form bereit, die für alle zugänglich ist - von technischen Teams bis hin zu Entscheidungsträgern in Unternehmen.",
+      p4: "Ich lade Sie ein, meine Arbeiten in den Bereichen Portfolio und Lebenslauf zu erkunden, wo Sie detaillierte Projektvorstellungen und einen umfassenden Überblick über meine beruflichen Erfolge finden. Ob Sie hierher gekommen sind, um zusammenzuarbeiten, zu lernen oder einfach die Faszination für Daten zu teilen – ich bin überzeugt, dass gerade an der Schnittstelle von Storytelling und Daten wahre Magie entsteht. Willkommen in meiner Welt der datengetriebenen Innovation!",
+    },
+    projects: {
+    heading: "Projekte",
+    project1: {
+        title: "Projekt 1: Lösung zur vorausschauenden Instandhaltung",
+        desc: "Eine End-to-End-Lösung zur vorausschauenden Instandhaltung, die Sensordaten und maschinelles Lernen nutzt, um den Zustand von Jet-Triebwerken vorherzusagen und Wartungspläne zu optimieren",
+        linkText2: "Github"
+    },
+    project2: {
+        title: "Projekt 2: BLG-Log-Klassifizierung mit NLP",
+        desc: "Eine umfassende Lösung, die rohe BGL-Logs mithilfe fortschrittlicher NLP in umsetzbare Erkenntnisse verwandelt, durch robuste API-Bereitstellung und interaktive PowerBI-Dashboards",
+        linkText2: "Github"
+    },
+    project3: {
+        title: "Projekt 3: Cold-Email-Generator mit LLM",
+        desc: "Ein produktionsreifer Cold-Email-Generator, der Jobdetails von Karriereseiten ausliest und LLM nutzt, um personalisierte Kontakt-E-Mails zu erstellen – alles containerisiert und CI/CD-fähig.",
+        linkText2: "Github"
+    },
+    project4: {
+        title: "GenAI-Beitragsgenerator für Gesundheitsinhalte",
+        desc: "Eine umfassende GenAI-Lösung, die maßgeschneiderte Gesundheitsinhalte durch fortschrittliche NLP und nahtlose, containerisierte Bereitstellung generiert.",
+        linkText2: "Github"
+    }
+},
+    skills: {
+    heading: "Fähigkeiten",
+    skill1: {
+        title: "Python",
+        desc: "Versiert in Python-Programmierung mit über 4 Jahren industrieller Erfahrung in Datenanalyse und maschinellem Lernen.",
+        certificate: "Zertifikat anzeigen"
+    },
+    skill2: {
+        title: "Datenvisualisierung",
+        desc: "Erfahren in der Erstellung aufschlussreicher Visualisierungen mit Werkzeugen wie Tableau, PowerBI und Datenanalyse-Bibliotheken",
+        certificate: "Zertifikat anzeigen"
+    },
+    skill3: {
+        title: "SQL",
+        desc: "Erfahren im Einsatz von SQL für Datenmanipulation, -extraktion und effektives Datenbankmanagement.",
+        certificate: "Zertifikat anzeigen"
+    },
+    skill4: {
+        title: "Datenstorytelling",
+        desc: "Erfahren darin, komplexe Dateneinblicke in überzeugende Erzählungen mit klaren Visualisierungen umzusetzen.",
+        certificate: "Zertifikat anzeigen"
+    }
+},
+        contact: {
+          heading: "Kontakt",
+          email: "asadfkhan5456@gmail.com",
+          phone: "+4915785081141",
+          linkedin: "LinkedIn",
+          github: "GitHub",
+          twitter: "Twitter",
+          medium: "Medium",
+          youtube: "YouTube"
+        },
+        resume: {
+          heading: "Lebenslauf",
+          download: "Lebenslauf herunterladen",
+          file: "Asad_Resume_DE.pdf"
+        }
+      }
+    };
+
+    let currentLang = 'en';
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let text = translations[currentLang];
+        keys.forEach(k => { text = text[k]; });
+        el.innerText = text;
+      });
+      // Update resume PDF
+      document.getElementById('resumeIframe').src = translations[currentLang].resume.file;
+      document.getElementById('resumeDownload').href = translations[currentLang].resume.file;
+    }
+
+    document.getElementById('langToggle').addEventListener('click', function() {
+      currentLang = (currentLang === 'en') ? 'de' : 'en';
+      // Update toggle button to display the language to switch to next
+      this.innerText = (currentLang === 'en') ? 'DE' : 'EN';
+      updateLanguage();
+    });
+
+    window.addEventListener('DOMContentLoaded', updateLanguage);
+  </script>
+
+  <!-- Bootstrap JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
