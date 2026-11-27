@@ -124,15 +124,29 @@ export const skills: { area: L; items: string[] }[] = [
   { area: { de: 'Machine Learning', en: 'Machine learning' }, items: ['PyTorch', 'scikit-learn', 'Hugging Face', 'MLOps'] },
 ];
 
-// Public repositories, described from their own READMEs.
-export const repos: { name: string; url: string; desc: L; stack: string[]; older?: boolean }[] = [
+// Public repositories, described only from their own READMEs.
+export interface Repo { name: string; url: string; desc: L; points: L<string[]>; flow: L<string[]>; stack: string[]; older?: boolean }
+export const repos: Repo[] = [
   {
     name: 'genai_cold_email_generator',
     url: 'https://github.com/asadkhan5456/genai_cold_email_generator',
     desc: {
-      de: 'Liest Stellenanzeigen von einer Karriereseite, sucht passende Portfolio-Links per Vektorsuche und schreibt daraus eine personalisierte E-Mail.',
-      en: 'Reads job details from a careers page, finds matching portfolio links with vector search and writes a personalised email.',
+      de: 'Liest eine Stellenanzeige von einer Karriereseite und schreibt daraus eine personalisierte E-Mail mit passenden Portfolio-Links.',
+      en: 'Reads a job posting from a careers page and writes a personalised email with matching portfolio links.',
     },
+    points: {
+      de: [
+        'Extrahiert Rolle, Erfahrung und Skills mit einem LLM (LangChain, Groq).',
+        'Findet passende Portfolio-Links per Vektorsuche in ChromaDB.',
+        'FastAPI-Endpunkte, Streamlit-Oberfläche, Docker Compose und CI mit GitHub Actions.',
+      ],
+      en: [
+        'Extracts role, experience and skills with an LLM (LangChain, Groq).',
+        'Finds matching portfolio links with vector search in ChromaDB.',
+        'FastAPI endpoints, a Streamlit UI, Docker Compose and CI with GitHub Actions.',
+      ],
+    },
+    flow: { de: ['Karriereseite', 'LLM', 'ChromaDB', 'E-Mail'], en: ['Careers page', 'LLM', 'ChromaDB', 'Email'] },
     stack: ['LangChain', 'Groq', 'ChromaDB', 'FastAPI', 'Streamlit', 'Docker'],
     older: true,
   },
@@ -140,19 +154,45 @@ export const repos: { name: string; url: string; desc: L; stack: string[]; older
     name: 'Newsroom-AI-Agent',
     url: 'https://github.com/asadkhan5456/Newsroom-AI-Agent',
     desc: {
-      de: 'Automation, die neue Artikel per RSS abholt, eine deutsche Zusammenfassung und Schlagzeilen erzeugt, das JSON validiert und an ein CMS, per E-Mail und in Logs ausliefert.',
-      en: 'Automation that picks up new articles via RSS, writes a German summary and headlines, validates the JSON and delivers it to a CMS, by email and to logs.',
+      de: 'Ein n8n-Agent, der neue Artikel zusammenfasst, Schlagzeilen vorschlägt und das Ergebnis an Redaktion und Systeme verteilt.',
+      en: 'An n8n agent that summarises new articles, suggests headlines and delivers the result to editors and systems.',
     },
-    stack: ['n8n', 'LLM', 'JSON validation'],
+    points: {
+      de: [
+        'Erkennt neue Artikel per RSS und extrahiert Titel und Text.',
+        'Erzeugt mit einem Groq-LLM eine deutsche Zusammenfassung in drei Sätzen und drei Schlagzeilen.',
+        'Prüft das JSON mit sicherem Fallback und liefert parallel als Datei, per HTTP an ein CMS, per E-Mail und als CSV-Log.',
+      ],
+      en: [
+        'Detects new articles via RSS and extracts title and body.',
+        'Uses a Groq LLM to write a three-sentence German summary and three headlines.',
+        'Validates the JSON with a safe fallback and delivers in parallel as a file, via HTTP to a CMS, by email and as a CSV log.',
+      ],
+    },
+    flow: { de: ['RSS', 'LLM', 'JSON-Prüfung', 'CMS · E-Mail · Log'], en: ['RSS', 'LLM', 'JSON check', 'CMS · email · log'] },
+    stack: ['n8n', 'Groq', 'JSON validation'],
   },
   {
     name: 'predictive_maintenance',
     url: 'https://github.com/asadkhan5456/predictive_maintenance',
     desc: {
-      de: 'Vorhersage der Restlebensdauer von Turbofan-Triebwerken aus Sensordaten, bereitgestellt als API mit Tests und CI.',
-      en: 'Predicts the remaining useful life of turbofan engines from sensor data, served as an API with tests and CI.',
+      de: 'Sagt die Restlebensdauer (RUL) von Turbofan-Triebwerken aus Sensordaten vorher.',
+      en: 'Predicts the remaining useful life (RUL) of turbofan engines from sensor data.',
     },
-    stack: ['Python', 'scikit-learn', 'FastAPI', 'Docker'],
+    points: {
+      de: [
+        'ETL und explorative Analyse der Sensordaten mit Pandas, Matplotlib und Seaborn.',
+        'Ein Random-Forest-Regressor (scikit-learn) für die Vorhersage der Restlebensdauer.',
+        'FastAPI-Endpunkt /predict, Docker, Tests mit Pytest und CI mit GitHub Actions.',
+      ],
+      en: [
+        'ETL and exploratory analysis of the sensor data with Pandas, Matplotlib and Seaborn.',
+        'A random forest regressor (scikit-learn) predicts the remaining useful life.',
+        'FastAPI endpoint /predict, Docker, tests with Pytest and CI with GitHub Actions.',
+      ],
+    },
+    flow: { de: ['Sensordaten', 'ETL', 'Random Forest', 'API /predict'], en: ['Sensor data', 'ETL', 'Random forest', 'API /predict'] },
+    stack: ['Python', 'scikit-learn', 'FastAPI', 'Docker', 'Pytest'],
     older: true,
   },
 ];

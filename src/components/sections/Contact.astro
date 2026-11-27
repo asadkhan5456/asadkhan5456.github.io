@@ -8,7 +8,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useT(lang);
 ---
-<section id="contact" class="section contact" aria-labelledby="contact-title">
+<section id="contact" class="section contact band-dark" aria-labelledby="contact-title">
   <div class="wrap">
     <h2 id="contact-title" class="visually-hidden">{t('contact.title')}</h2>
     <p class="big" aria-hidden="true">{t('contact.line')}</p>
@@ -22,8 +22,8 @@ const t = useT(lang);
   </div>
 </section>
 <style>
-  .contact { background: var(--ink); color: var(--paper); border-top: 0; }
-  .big { font-family: var(--font-display); font-weight: 800; font-size: var(--step-4); line-height: 0.92; letter-spacing: -0.045em; margin: 0; font-variation-settings: 'wdth' 90; }
+  .contact { border-top: 0; }
+  .big { font-family: var(--font-display); font-weight: 800; font-size: var(--step-4); line-height: 0.95; letter-spacing: -0.03em; margin: 0; font-variation-settings: 'wdth' 88; }
   .big::after { content: ''; display: block; width: 4.5rem; height: 0.35rem; background: var(--marker); margin-top: 1.5rem; border-radius: 2px; }
   .body { margin: 1.75rem 0 2rem; font-size: var(--step-1); max-width: 34rem; color: color-mix(in srgb, var(--paper) 85%, transparent); }
   .ways { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; max-width: 40rem; }
@@ -34,5 +34,4 @@ const t = useT(lang);
   .ways :global(a:hover) { color: var(--marker); }
   .ways :global(a svg) { width: 0.9em; height: 0.9em; }
   .where { margin: 2rem 0 0; color: color-mix(in srgb, var(--paper) 65%, transparent); }
-  :global(:root[data-theme='dark']) .contact, .contact { --ink-on: var(--paper); }
 </style>

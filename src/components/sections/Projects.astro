@@ -3,27 +3,32 @@ import { getCollection } from 'astro:content';
 import { useT, type Lang } from '../../i18n/ui';
 import { profile, repos } from '../../data/profile';
 import ExternalLink from '../ExternalLink.astro';
+import ThreeWayMatch from '../ThreeWayMatch.astro';
 import Icon from '../Icon.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = useT(lang);
 const projects = await getCollection('projects');
+const covered = t('projects.covered').split('|');
 ---
 <section id="projects" class="section" aria-labelledby="projects-title">
   <div class="wrap">
     <div class="section-head"><h2 id="projects-title">{t('projects.title')}</h2></div>
 
     {projects.map((p) => (
-      <article class="feature">
-        <div>
+      <article class="feature band-dark">
+        <div class="f-text">
           <p class="status"><span class="dot" aria-hidden="true"></span>{t('projects.building')}</p>
           <h3>{p.data.title}</h3>
           <p class="summary">{p.data.summary[lang]}</p>
+          <h4>{t('projects.covers')}</h4>
+          <ul class="covers">{covered.map((c) => <li>{c}</li>)}</ul>
           <ul class="tags">{p.data.stack.map((s) => <li>{s}</li>)}</ul>
           {p.data.repo && p.data.repoPublic && (
             <p class="repo"><ExternalLink href={p.data.repo} lang={lang}>{p.data.title} {lang === 'de' ? 'auf GitHub' : 'on GitHub'}</ExternalLink></p>
           )}
         </div>
+        <div class="f-art"><ThreeWayMatch lang={lang} /></div>
       </article>
     ))}
 
@@ -34,10 +39,16 @@ const projects = await getCollection('projects');
       </div>
       <ul class="repos">
         {repos.map((r) => (
-          <li>
+          <li class="repo-card">
+            <div class="flow" aria-label={`${t('projects.flow')}: ${r.flow[lang].join(' → ')}`} role="img">
+              <span class="track" aria-hidden="true"><span class="pulse"></span></span>
+              {r.flow[lang].map((f) => <span class="stage" aria-hidden="true">{f}</span>)}
+            </div>
             <ExternalLink class="repo-name marker-link" href={r.url} lang={lang} icon={false}>{r.name}</ExternalLink>
-            <p>{r.desc[lang]}</p>
-            <p class="meta">{r.stack.join(', ')}{r.older && <> · {t('projects.older')}</>}</p>
+            <p class="desc">{r.desc[lang]}</p>
+            <ul class="points">{r.points[lang].map((pt) => <li>{pt}</li>)}</ul>
+            <p class="meta">{r.stack.join(', ')}</p>
+            {r.older && <p class="older">{t('projects.older')}</p>}
           </li>
         ))}
       </ul>
@@ -45,39 +56,73 @@ const projects = await getCollection('projects');
   </div>
 </section>
 
+<script>
+  // Send the pulse through each repo's pipeline once when the list scrolls into view.
+  const cards = document.querySelectorAll<HTMLElement>('.repo-card');
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { (e.target as HTMLElement).classList.add('run'); io.unobserve(e.target); }
+    }), { threshold: 0.5 });
+    cards.forEach((c) => io.observe(c));
+  }
+</script>
+
 <style>
   .feature {
-    position: relative; overflow: hidden; border-radius: calc(var(--radius) + 6px);
-    background: var(--ink); color: var(--paper); padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    display: grid; gap: 2.5rem; align-items: center;
+    border-radius: calc(var(--radius) + 6px);
+    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem);
   }
-  .feature::after {
-    /* a stack of document sheets, drawn with gradients, bottom right */
-    content: ''; position: absolute; right: -40px; bottom: -60px; width: 260px; height: 300px; border-radius: 16px;
-    background:
-      linear-gradient(var(--marker), var(--marker)) 30px 70px / 120px 12px no-repeat,
-      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--paper) 22%, transparent) 0 6px, transparent 6px 22px) 30px 40px / 180px 220px no-repeat,
-      color-mix(in srgb, var(--paper) 8%, transparent);
-    transform: rotate(-8deg); pointer-events: none;
-  }
-  .feature > div { position: relative; z-index: 1; max-width: 40rem; }
+  @media (min-width: 1000px) { .feature { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 3.5rem; } }
   .status { display: inline-flex; align-items: center; gap: 0.55rem; font-size: var(--step--1); font-weight: 600; color: var(--marker); margin-bottom: 0.9rem; }
-  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 0 var(--marker); animation: pulse 2.4s ease-out infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--marker) 70%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--marker); animation: pulse-ring 2.4s ease-out infinite; }
+  @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--marker) 70%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
   .feature h3 { color: var(--paper); font-size: var(--step-3); letter-spacing: -0.03em; }
-  .summary { margin: 1rem 0 1.25rem; font-size: 1.1rem; color: color-mix(in srgb, var(--paper) 85%, transparent); }
+  .summary { margin: 1rem 0 1.5rem; font-size: 1.1rem; color: color-mix(in srgb, var(--paper) 85%, transparent); }
+  h4 { margin: 0 0 0.6rem; font: 600 var(--step--1) var(--font-body); color: color-mix(in srgb, var(--paper) 65%, transparent); }
+  .covers { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 0.5rem; }
+  .covers li { margin: 0; display: flex; gap: 0.6rem; align-items: baseline; }
+  .covers li::before { content: ''; width: 0.7rem; height: 0.35rem; flex: none; background: var(--marker); border-radius: 2px; transform: translateY(-0.2rem); }
   .feature .tags { color: color-mix(in srgb, var(--paper) 70%, transparent); }
   .repo { margin: 1.25rem 0 0; } .repo :global(a) { color: var(--marker); }
 
-  .gh { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); }
-  .gh-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .gh { margin-top: clamp(3rem, 2rem + 3vw, 5rem); }
+  .gh-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
   .gh-head h3 { display: inline-flex; align-items: center; gap: 0.6rem; font-size: var(--step-2); }
   .gh-head h3 :global(svg) { width: 1.6rem; height: 1.6rem; }
-  .gh-head :global(.btn svg) { width: 0.95em; height: 0.95em; }
-  .repos { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--rule); border-block: 1px solid var(--rule); }
-  @media (min-width: 900px) { .repos { grid-template-columns: repeat(3, 1fr); } }
-  .repos li { margin: 0; background: var(--paper); padding: 1.5rem 1.5rem 1.5rem 0; }
-  @media (min-width: 900px) { .repos li { padding: 1.5rem; } .repos li:first-child { padding-left: 0; } }
-  .repos :global(.repo-name) { font-family: var(--font-display); font-weight: 650; font-size: 1.15rem; display: inline-block; margin-bottom: 0.5rem; word-break: break-word; }
-  .repos p { margin: 0 0 0.6rem; color: var(--ink-soft); }
-  .meta { font-size: var(--step--1); }
+  .repos { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  @media (min-width: 960px) { .repos { grid-template-columns: repeat(3, 1fr); } }
+  .repo-card {
+    margin: 0; display: flex; flex-direction: column; gap: 0.6rem;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1.4rem;
+    transition: border-color 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .repo-card:hover, .repo-card:focus-within { border-color: var(--blue); transform: translateY(-3px); }
+  .repo-card :global(.repo-name) { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; word-break: break-word; color: var(--ink); }
+  .desc { margin: 0; }
+  .points { margin: 0.2rem 0 0.4rem; padding-left: 1.1rem; display: grid; gap: 0.35rem; color: var(--ink-soft); font-size: 0.97rem; }
+  .points li { margin: 0; } .points li::marker { color: var(--blue); }
+  .meta { margin: auto 0 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .older { margin: 0; font-size: var(--step--1); font-weight: 600; color: var(--ink-soft); }
+
+  /* Pipeline strip: stages on a track, a pulse travels through them. */
+  .flow { position: relative; display: flex; flex-wrap: wrap; gap: 0.45rem 1.15rem; padding: 0.9rem 0 1rem; margin-bottom: 0.3rem; border-bottom: 1px dashed var(--rule); }
+  .stage {
+    position: relative; z-index: 1; font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 999px;
+    background: var(--paper); border: 1px solid var(--rule); color: var(--ink);
+  }
+  .stage:last-child { background: var(--blue-soft); border-color: var(--blue); }
+  .stage:not(:last-child)::after {
+    content: ''; position: absolute; right: -0.95rem; top: 50%; width: 0.5rem; height: 0.5rem;
+    border-top: 1.5px solid var(--ink-soft); border-right: 1.5px solid var(--ink-soft); transform: translateY(-50%) rotate(45deg);
+  }
+  .track { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; overflow: hidden; }
+  .pulse { position: absolute; top: 0; left: 0; width: 30%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); transform: translateX(-100%); }
+  .run .pulse { animation: travel 1.6s ease-in-out 2; }
+  .repo-card:hover .pulse, .repo-card:focus-within .pulse { animation: travel 1.6s ease-in-out infinite; }
+  .run .stage { animation: light 0.5s ease-out both; }
+  .run .stage:nth-child(2) { animation-delay: 0.1s; } .run .stage:nth-child(3) { animation-delay: 0.45s; }
+  .run .stage:nth-child(4) { animation-delay: 0.8s; } .run .stage:nth-child(5) { animation-delay: 1.15s; }
+  @keyframes travel { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+  @keyframes light { 0% { border-color: var(--rule); } 50% { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); } 100% { } }
 </style>
