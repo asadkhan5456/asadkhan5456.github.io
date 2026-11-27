@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import { useT, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+// Published posts would get their own pages; drafts are only announced by title.
+const posts = await getCollection('posts');
+---
+<section id="blog" class="section" aria-labelledby="blog-title">
+  <div class="wrap">
+    <div class="section-head"><h2 id="blog-title">{t('blog.title')}</h2><p>{t('blog.intro')}</p></div>
+    <ul class="posts">
+      {posts.map((p) => (
+        <li>
+          <span class="post-title">{p.data.title[lang]}</span>
+          <span class="soon">{p.data.draft ? t('blog.soon') : p.data.date?.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB')}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
+  .posts li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+  .post-title { font-family: var(--font-display); font-size: var(--step-1); font-weight: 650; }
+  .soon { font-size: var(--step--1); font-weight: 600; background: var(--marker); color: var(--marker-ink); padding: 0.15rem 0.6rem; border-radius: 999px; }
+</style>

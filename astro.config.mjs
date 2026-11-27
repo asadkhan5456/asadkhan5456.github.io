@@ -6,11 +6,15 @@ export default defineConfig({
   site: 'https://asadkhan5456.github.io',
   output: 'static',
   trailingSlash: 'always',
-  // English is served at the root. Add 'de' to locales and create src/pages/de/ to add German.
+  // German is the main language at /, English lives under /en/.
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'de',
+    locales: ['de', 'en'],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'de', locales: { de: 'de-DE', en: 'en-GB' } },
+    }),
+  ],
 });

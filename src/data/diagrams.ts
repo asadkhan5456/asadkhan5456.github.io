@@ -5,13 +5,26 @@ type Pt = [number, number];
 interface Node { x: number; y: number; w: number; h: number; label: string; sub?: string; kind?: 'default' | 'accent' | 'io' }
 interface Edge { points: Pt[]; label?: string; labelAt?: Pt; dashed?: boolean; both?: boolean }
 interface Group { x: number; y: number; w: number; h: number; label: string }
-interface Diagram { title: string; caption: string; width: number; height: number; nodes: Node[]; edges: Edge[]; groups: Group[] }
+interface Diagram { title: string; width: number; height: number; nodes: Node[]; edges: Edge[]; groups: Group[] }
 
-export const diagrams = {
+const DE: Record<string, string> = {
+  'PDF': 'PDF', 'documents': 'Dokumente', 'Agent': 'Agent', 'event-driven communication': 'ereignisgesteuerte Kommunikation',
+  'Structured data': 'Strukturierte Daten', 'predefined format': 'vorgegebenes Format', 'Downstream': 'Nachgelagerte', 'systems': 'Systeme',
+  'Documents': 'Dokumente', 'PDF · Word\ntables · images': 'PDF · Word\nTabellen · Bilder', 'Orchestrator': 'Orchestrator', 'MCP server': 'MCP-Server',
+  'Document': 'Dokument-', 'conversion tool': 'Konvertierung', 'Structured': 'Strukturierte', 'extraction tool': 'Extraktion', 'Validation &': 'Validierung &',
+  'evaluation': 'Evaluation', 'output': 'Ausgabe', 'Source': 'Quelle', 'Source …': 'Quelle …', 'Metadata-driven': 'Metadatengesteuerte', 'pipelines · Python / PySpark': 'Pipelines · Python / PySpark',
+  'Lakehouse': 'Lakehouse', 'Delta Lake': 'Delta Lake', 'Ontology-based standardization': 'Ontologiebasierte Standardisierung', 'AI & ML': 'KI & ML', 'use cases': 'Anwendungsfälle',
+  'Operator': 'Bediener', 'speech': 'Sprache', 'Whisper': 'Whisper', 'speech to text': 'Sprache zu Text', 'Azure OpenAI': 'Azure OpenAI', 'GPT models': 'GPT-Modelle',
+  'Answer': 'Antwort', 'operator language': 'Sprache des Bedieners', 'Machine': 'Maschine', 'process data': 'Prozessdaten', 'Process-monitoring model': 'Modell zur Prozessüberwachung',
+  'ML-based': 'ML-basiert', 'Product': 'Produkt-', 'quality': 'qualität', 'MCP': 'MCP',
+  'Microsoft Azure': 'Microsoft Azure', 'Kubernetes · deployed with Helm': 'Kubernetes · ausgerollt mit Helm', 'Microsoft Fabric': 'Microsoft Fabric',
+  'Microsoft Azure · MLOps with CI/CD': 'Microsoft Azure · MLOps mit CI/CD',
+};
+
+const base = {
   // TODO(asad): number, names and responsibilities of the agents are not confirmed; shown as generic "Agent" boxes.
   'doc-platform': {
     title: 'Multi-agent document processing platform',
-    caption: 'Generic view. PDFs flow through agents that communicate via Apache Kafka; the result is structured data in a predefined format.',
     width: 760,
     height: 300,
     groups: [{ x: 160, y: 20, w: 420, h: 260, label: 'Microsoft Azure' }],
@@ -36,7 +49,6 @@ export const diagrams = {
   // TODO(asad): the exact tool list and the evaluation method are not confirmed; only conversion and extraction are shown.
   mcp: {
     title: 'MCP-based document intelligence',
-    caption: 'Generic view. An orchestrator calls document tools over the Model Context Protocol; agent output is validated and evaluated.',
     width: 760,
     height: 320,
     groups: [{ x: 160, y: 20, w: 584, h: 280, label: 'Kubernetes · deployed with Helm' }],
@@ -61,7 +73,6 @@ export const diagrams = {
   // TODO(asad): where the ontology-based standardization runs (in the pipelines or as a separate layer) is not confirmed.
   fabric: {
     title: 'Data platform for scientific process data',
-    caption: 'Generic view. Metadata-driven pipelines integrate many sources into a Delta Lake lakehouse and standardize the data against an ontology.',
     width: 760,
     height: 300,
     groups: [{ x: 160, y: 20, w: 440, h: 260, label: 'Microsoft Fabric' }],
@@ -86,7 +97,6 @@ export const diagrams = {
   // TODO(asad): how answers are returned to the operator (speech output, screen) is not confirmed; shown as a generic answer.
   voice: {
     title: 'Multilingual voice assistant for industrial machines',
-    caption: 'Generic view. Speech is transcribed with Whisper and answered with Azure OpenAI GPT models; a separate model monitors product quality.',
     width: 760,
     height: 320,
     groups: [{ x: 160, y: 20, w: 584, h: 280, label: 'Microsoft Azure · MLOps with CI/CD' }],
@@ -109,4 +119,16 @@ export const diagrams = {
   },
 } satisfies Record<string, Diagram>;
 
-export type DiagramKey = keyof typeof diagrams;
+export type DiagramKey = keyof typeof base;
+
+const tr = (s: string | undefined, lang: 'de' | 'en') => (s === undefined || lang === 'en' ? s : DE[s] ?? s);
+
+export function getDiagram(name: DiagramKey, lang: 'de' | 'en'): Diagram {
+  const d = base[name] as Diagram;
+  return {
+    ...d,
+    nodes: d.nodes.map((n) => ({ ...n, label: tr(n.label, lang)!, sub: tr(n.sub, lang) })),
+    groups: d.groups.map((g) => ({ ...g, label: tr(g.label, lang)! })),
+    edges: d.edges.map((e) => ({ ...e, label: tr(e.label, lang) })),
+  };
+}

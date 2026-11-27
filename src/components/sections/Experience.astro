@@ -1,0 +1,55 @@
+---
+import { useT, type Lang } from '../../i18n/ui';
+import { experience } from '../../data/profile';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+<section id="experience" class="section" aria-labelledby="exp-title">
+  <div class="wrap grid">
+    <div class="head"><h2 id="exp-title">{t('experience.title')}</h2></div>
+    <ol class="timeline">
+      {experience.map((j) => (
+        <li>
+          <p class="when"><time>{j.start}</time> – <span>{j.end[lang]}</span></p>
+          <h3>{j.title[lang]}</h3>
+          <p class="org">{j.org}{j.place && `, ${j.place[lang]}`}</p>
+          <ul class="points">{j.points[lang].map((p) => <li>{p}</li>)}</ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: 280px minmax(0, 1fr); gap: 5rem; }
+    .head { position: sticky; top: 6rem; align-self: start; }
+  }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 1.75rem; position: relative; max-width: 46rem; }
+  /* The rail: drawn as the reader scrolls through the list, where supported. */
+  .timeline::before {
+    content: ''; position: absolute; left: 5px; top: 0.6rem; bottom: 0.6rem; width: 2px;
+    background: var(--blue); transform-origin: top;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .timeline::before { animation: rail linear both; animation-timeline: view(); animation-range: entry 10% cover 60%; }
+    }
+  }
+  @keyframes rail { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  .timeline > li { position: relative; padding-bottom: 2.75rem; margin: 0; }
+  .timeline > li:last-child { padding-bottom: 0; }
+  .timeline > li::before {
+    content: ''; position: absolute; left: calc(-1.75rem + 0px); top: 0.45rem;
+    width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2.5px solid var(--blue);
+  }
+  .timeline > li:first-child::before { background: var(--marker); border-color: var(--ink); }
+  .when { margin: 0 0 0.35rem; font-size: var(--step--1); font-weight: 600; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  h3 { font-size: var(--step-2); line-height: 1.15; }
+  .org { margin: 0.35rem 0 0; color: var(--ink-soft); font-weight: 500; }
+  .points { margin: 1rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.5rem; }
+  .points li { margin: 0; }
+  .points li::marker { color: var(--blue); }
+</style>

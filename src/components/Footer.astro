@@ -1,27 +1,27 @@
 ---
-import { t, type Lang } from '../i18n/ui';
+import { useT, type Lang } from '../i18n/ui';
 import { profile } from '../data/profile';
+import ExternalLink from './ExternalLink.astro';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const year = new Date().getFullYear();
+const t = useT(lang);
 ---
-
 <footer class="site-footer">
-  <div class="container row">
-    <p>© {year} {t('site.name', lang)} · Aalen, Germany</p>
+  <div class="wrap row">
+    <p>© {new Date().getFullYear()} Asad Faiyyaz Khan · {t('footer.location')}</p>
     <ul>
-      <li><a href={profile.linkedin} rel="me">LinkedIn</a></li>
-      <li><a href={profile.github} rel="me">GitHub</a></li>
-      <li><a href="/contact/">{t('nav.contact', lang)}</a></li>
+      <li><ExternalLink href={profile.linkedin} lang={lang} rel="me">LinkedIn</ExternalLink></li>
+      <li><ExternalLink href={profile.github} lang={lang} rel="me">GitHub</ExternalLink></li>
     </ul>
   </div>
 </footer>
-
 <style>
-  .site-footer { border-top: 1px solid var(--border); padding: 1.5rem 0; font-size: 0.92rem; color: var(--muted); }
-  .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; align-items: center; }
+  .site-footer { border-top: 1px solid var(--rule); padding-block: 1.75rem; color: var(--ink-soft); font-size: var(--step--1); }
+  .row { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: space-between; align-items: center; }
   p { margin: 0; }
-  ul { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+  ul { display: flex; gap: 1.25rem; list-style: none; padding: 0; margin: 0; }
   li { margin: 0; }
-  a { display: inline-flex; align-items: center; min-height: 44px; }
+  a { display: inline-flex; align-items: center; gap: 0.25rem; min-height: 44px; color: var(--ink-soft); }
+  a:hover { color: var(--blue); }
+  a :global(svg) { width: 0.9em; height: 0.9em; }
 </style>

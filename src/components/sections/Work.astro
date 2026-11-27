@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import { useT, localePath, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const cases = (await getCollection('case-studies', (c) => c.id.startsWith(`${lang}/`))).sort((a, b) => a.data.order - b.data.order);
+const slug = (id: string) => id.split('/')[1];
+---
+<section id="work" class="section" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="work-title">{t('work.title')}</h2>
+      <p>{t('work.note')}</p>
+    </div>
+    <ul class="rows">
+      {cases.map((c) => (
+        <li>
+          <a class="row" href={localePath(lang, `/work/${slug(c.id)}/`)}>
+            <span class="client">{c.data.client}</span>
+            <span class="title"><span class="marker-link">{c.data.title}</span></span>
+            <span class="summary">{c.data.summary}</span>
+            <span class="stack">{c.data.stack.slice(0, 4).join(', ')}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rows { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
+  .rows li { margin: 0; border-bottom: 1px solid var(--rule); }
+  .row {
+    display: grid; gap: 0.5rem 2.5rem; padding: 1.75rem 0; color: var(--ink); text-decoration: none;
+  }
+  @media (min-width: 900px) {
+    .row { grid-template-columns: 220px minmax(0, 1fr) 260px; grid-template-areas: 'client title stack' 'client summary stack'; padding: 2.25rem 0; }
+    .client { grid-area: client; } .title { grid-area: title; } .summary { grid-area: summary; } .stack { grid-area: stack; text-align: right; }
+  }
+  .client { color: var(--ink-soft); font-size: var(--step--1); font-weight: 600; padding-top: 0.45rem; }
+  .title { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; }
+  .summary { color: var(--ink-soft); max-width: 40rem; }
+  .stack { color: var(--ink-soft); font-size: var(--step--1); padding-top: 0.45rem; }
+  .row:hover .marker-link, .row:focus-visible .marker-link { background-size: 100% 0.42em; }
+  .row:focus-visible { outline-offset: 6px; }
+</style>

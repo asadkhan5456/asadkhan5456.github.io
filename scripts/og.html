@@ -1,18 +1,28 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><style>
-  @font-face { font-family: Inter; src: url('../cv/fonts/inter-latin-700-normal.woff'); font-weight: 700; }
-  @font-face { font-family: Inter; src: url('../cv/fonts/inter-latin-600-normal.woff'); font-weight: 600; }
-  @font-face { font-family: Inter; src: url('../cv/fonts/inter-latin-400-normal.woff'); font-weight: 400; }
+  @font-face { font-family: Bricolage; src: url('../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2'); font-weight: 200 800; }
+  @font-face { font-family: Plex; src: url('../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2'); font-weight: 600; }
+  @font-face { font-family: PlexMono; src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2'); font-weight: 500; }
   html, body { margin: 0; width: 1200px; height: 630px; }
-  body { font-family: Inter, sans-serif; background: #111318; color: #e8eaef; display: flex; flex-direction: column; justify-content: center; padding: 0 90px; box-sizing: border-box; }
-  .bar { width: 72px; height: 8px; background: #5fd4c4; border-radius: 4px; margin-bottom: 40px; }
-  h1 { font-size: 76px; font-weight: 700; margin: 0 0 20px; letter-spacing: -1px; }
-  p { font-size: 34px; font-weight: 600; color: #5fd4c4; margin: 0 0 28px; }
-  .sub { font-size: 26px; font-weight: 400; color: #a9b0bd; margin: 0; }
+  body { background: #f3f5f7; color: #0e1726; font-family: Plex, sans-serif; position: relative; overflow: hidden; }
+  .copy { position: absolute; left: 80px; top: 120px; width: 640px; }
+  h1 { font-family: Bricolage; font-weight: 800; font-size: 104px; line-height: 0.9; letter-spacing: -4px; margin: 0; }
+  p { font-size: 30px; font-weight: 600; color: #1d4ed8; margin: 34px 0 0; }
+  .sub { font-size: 22px; color: #4b5568; margin-top: 18px; }
+  .doc { position: absolute; right: 230px; top: 110px; width: 210px; height: 290px; background: #fff; border: 2px solid #d6dce4; border-radius: 14px; transform: rotate(-6deg); box-shadow: 0 30px 50px -25px rgba(14,23,38,.35); }
+  .doc i { display: block; height: 9px; border-radius: 5px; background: rgba(14,23,38,.16); margin: 18px 22px 0; }
+  .doc i.f { background: rgba(14,23,38,.35); box-shadow: 0 0 0 7px #ffd93d; outline: 2px solid #1d4ed8; outline-offset: 9px; }
+  .json { position: absolute; right: 60px; top: 260px; width: 290px; background: #0e1726; color: #f3f5f7; border-radius: 14px; padding: 22px 24px; font: 500 19px/1.6 PlexMono, monospace; white-space: pre; }
+  .bar { position: absolute; left: 80px; bottom: 70px; width: 90px; height: 10px; background: #ffd93d; border-radius: 3px; }
 </style></head>
 <body>
+  <div class="copy"><h1>Asad Faiyyaz<br>Khan</h1><p id="role"></p><div class="sub">Aalen · asadkhan5456.github.io</div></div>
+  <div class="doc"><i style="width:55%;margin-top:40px"></i><i class="f" style="width:78%"></i><i style="width:66%"></i><i style="width:82%"></i><i class="f" style="width:50%"></i><i style="width:74%"></i><i style="width:60%"></i><i style="width:70%"></i></div>
+  <div class="json" id="json"></div>
   <div class="bar"></div>
-  <h1>Asad Faiyyaz Khan</h1>
-  <p>Senior AI Engineer · Agentic systems, MCP and Azure</p>
-  <div class="sub">Aalen, Germany · asadkhan5456.github.io</div>
+  <script>
+    const de = location.hash === '#de';
+    document.getElementById('role').textContent = de ? 'Senior AI Engineer · Agentic Systems, MCP und Azure' : 'Senior AI Engineer · Agentic systems, MCP and Azure';
+    document.getElementById('json').textContent = de ? '{\n  "rolle": "AI Engineer",\n  "ort": "Aalen",\n  "status": "geprüft"\n}' : '{\n  "role": "AI Engineer",\n  "city": "Aalen",\n  "status": "validated"\n}';
+  </script>
 </body></html>

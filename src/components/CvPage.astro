@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import ExternalLink from './ExternalLink.astro';
+import { useT, type Lang } from '../i18n/ui';
+import { profile } from '../data/profile';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const pages = [1, 2];
+---
+<Base lang={lang} title={t('cv.title')} description={t('cv.intro')}>
+  <div class="wrap cv">
+    <header class="cv-head">
+      <div>
+        <h1>{t('cv.title')}</h1>
+        <p class="lead">{t('cv.intro')}</p>
+      </div>
+      <div class="btns">
+        <a class="btn btn-primary" href={profile.cvPdf} download><Icon name="download" />{t('cv.download')}</a>
+        <ExternalLink class="btn" href={profile.cvPdf} lang={lang}>{t('cv.open')}</ExternalLink>
+      </div>
+    </header>
+    <ol class="pages">
+      {pages.map((n) => (
+        <li>
+          <a href={profile.cvPdf} target="_blank" rel="noopener" class="page">
+            <img src={`/cv/preview-${n}.webp`} width="1191" height="1684" alt={`${t('cv.pageAlt')} ${n}`} loading={n === 1 ? 'eager' : 'lazy'} decoding="async" />
+          </a>
+          <p class="pn">{t('cv.page')} {n} / {pages.length}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Base>
+<style>
+  .cv { padding-block: clamp(2.5rem, 2rem + 3vw, 5rem); }
+  .cv-head { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: end; justify-content: space-between; margin-bottom: 2.5rem; }
+  h1 { font-size: var(--step-3); letter-spacing: -0.035em; font-weight: 800; }
+  .lead { margin: 0.8rem 0 0; color: var(--ink-soft); font-size: var(--step-1); max-width: 34rem; }
+  .btns :global(svg) { width: 1.05em; height: 1.05em; }
+  .pages { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+  @media (min-width: 900px) { .pages { grid-template-columns: 1fr 1fr; } }
+  .pages li { margin: 0; }
+  .page { display: block; border-radius: 6px; overflow: hidden; background: #fff; box-shadow: var(--shadow); border: 1px solid var(--rule); }
+  .page:hover { outline: 2px solid var(--blue); outline-offset: 4px; }
+  .page img { width: 100%; height: auto; }
+  .pn { margin: 0.75rem 0 0; color: var(--ink-soft); font-size: var(--step--1); text-align: center; }
+</style>

@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Diagram from './Diagram.astro';
+import { useT, localePath, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; entry: CollectionEntry<'case-studies'> }
+const { lang, entry } = Astro.props;
+const t = useT(lang);
+const d = entry.data;
+---
+<Base lang={lang} title={d.title} description={d.summary} ogType="article">
+  <article class="wrap cs">
+    <header class="cs-head">
+      <p class="client">{d.client}</p>
+      <h1>{d.title}</h1>
+      <p class="lead">{d.summary}</p>
+    </header>
+    <div class="body">
+      <section><h2>{t('work.context')}</h2><p>{d.context}</p></section>
+      <section><h2>{t('work.problem')}</h2><p>{d.problem}</p></section>
+      <section class="wide">
+        <h2>{t('work.approach')}</h2>
+        <ul class="list">{d.approach.map((a) => <li>{a}</li>)}</ul>
+        <Diagram name={d.diagram} alt={d.diagramAlt} lang={lang} />
+      </section>
+      <section><h2>{t('work.role')}</h2><p>{d.role}</p></section>
+      <section><h2>{t('work.outcome')}</h2><p>{d.outcome}</p></section>
+      <section><h2>{t('work.stack')}</h2><ul class="tags stack">{d.stack.map((s) => <li>{s}</li>)}</ul></section>
+    </div>
+    <p class="note">{t('work.footer')}</p>
+    <p><a class="back" href={`${localePath(lang, '/')}#work`}>{t('work.back')}</a></p>
+  </article>
+</Base>
+<style>
+  .cs { padding-block: clamp(2.5rem, 2rem + 4vw, 6rem); }
+  .cs-head { max-width: 52rem; padding-bottom: 2.5rem; border-bottom: 1.5px solid var(--ink); }
+  .client { color: var(--blue); font-weight: 600; margin-bottom: 0.8rem; }
+  h1 { font-size: var(--step-3); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; }
+  .lead { margin: 1.25rem 0 0; font-size: var(--step-1); color: var(--ink-soft); max-width: 42rem; }
+  .body { display: grid; gap: 0; max-width: 58rem; }
+  .body section { display: grid; gap: 0.75rem; padding: 2rem 0; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 860px) { .body section { grid-template-columns: 220px minmax(0, 1fr); gap: 3rem; } .body section > :not(h2) { grid-column: 2; } }
+  .body h2 { font-size: var(--step-1); letter-spacing: -0.01em; }
+  .body p { margin: 0; max-width: var(--measure); }
+  .list { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.5rem; max-width: var(--measure); }
+  .list li::marker { color: var(--blue); }
+  .stack { font-size: 1rem; color: var(--ink); }
+  .note { margin: 2.5rem 0 1rem; color: var(--ink-soft); font-size: var(--step--1); }
+  .back { font-weight: 600; }
+</style>

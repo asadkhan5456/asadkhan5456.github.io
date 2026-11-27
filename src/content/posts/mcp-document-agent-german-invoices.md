@@ -1,6 +1,7 @@
 ---
-title: Building an MCP-native document agent for German invoices
-description: Notes from building DokuPilot.
+title:
+  de: Einen MCP-nativen Dokumenten-Agenten für deutsche Rechnungen bauen
+  en: Building an MCP-native document agent for German invoices
 draft: true
 ---
 

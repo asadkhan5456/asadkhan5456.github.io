@@ -1,0 +1,41 @@
+---
+import { useT, localePath, type Lang } from '../../i18n/ui';
+import { profile } from '../../data/profile';
+import HeroGraphic from '../HeroGraphic.astro';
+import ExternalLink from '../ExternalLink.astro';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+<section class="hero" aria-labelledby="hero-name">
+  <div class="wrap grid">
+    <div class="copy">
+      <h1 id="hero-name"><span>Asad Faiyyaz</span> <span>Khan</span></h1>
+      <p class="role">{t('site.role')}</p>
+      <p class="intro">{t('hero.intro')}</p>
+      <p class="where">{t('hero.location')}</p>
+      <div class="btns">
+        <a class="btn btn-primary" href={localePath(lang, '/cv/')}><Icon name="doc" />{t('hero.cv')}</a>
+        <ExternalLink class="btn" href={profile.linkedin} lang={lang} rel="me" icon={false}><Icon name="linkedin" />LinkedIn</ExternalLink>
+        <ExternalLink class="btn" href={profile.github} lang={lang} rel="me" icon={false}><Icon name="github" />GitHub</ExternalLink>
+      </div>
+    </div>
+    <div class="art"><HeroGraphic lang={lang} /></div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: clamp(2.5rem, 1.5rem + 5vw, 6rem) clamp(3.5rem, 2rem + 5vw, 7rem); overflow: hidden; }
+  .grid { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 980px) { .grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 4rem; } }
+  h1 {
+    font-size: var(--step-4); line-height: 0.9; letter-spacing: -0.045em; font-weight: 800;
+    font-variation-settings: 'opsz' 96, 'wdth' 90;
+  }
+  h1 span { display: block; }
+  .role { margin: 1.5rem 0 0; font-family: var(--font-display); font-size: var(--step-1); font-weight: 600; color: var(--blue); letter-spacing: -0.005em; }
+  .intro { margin: 1.1rem 0 0; font-size: var(--step-1); line-height: 1.5; max-width: 34rem; }
+  .where { margin: 1.1rem 0 2rem; color: var(--ink-soft); }
+  .art { max-width: 620px; width: 100%; justify-self: center; padding-bottom: 2.5rem; }
+</style>

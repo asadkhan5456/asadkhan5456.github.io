@@ -1,34 +1,32 @@
 ---
-import { diagrams, type DiagramKey } from '../data/diagrams';
+import { getDiagram, type DiagramKey } from '../data/diagrams';
+import { useT, type Lang } from '../i18n/ui';
 
-interface Props { name: DiagramKey; alt: string }
-const { name, alt } = Astro.props;
-const d = diagrams[name];
+interface Props { name: DiagramKey; alt: string; lang: Lang }
+const { name, alt, lang } = Astro.props;
+const t = useT(lang);
+const d = getDiagram(name, lang);
 const id = `dg-${name}`;
-
-const lines = (label: string) => label.split('\n');
+const lines = (s: string) => s.split('\n');
 const path = (pts: [number, number][]) => 'M ' + pts.map((p) => p.join(' ')).join(' L ');
 ---
 
 <figure class="diagram">
   <div class="scroll">
-    <svg viewBox={`0 0 ${d.width} ${d.height}`} role="img" aria-labelledby={`${id}-t ${id}-d`} xmlns="http://www.w3.org/2000/svg">
+    <svg class="dg" viewBox={`0 0 ${d.width} ${d.height}`} role="img" aria-labelledby={`${id}-t ${id}-d`} xmlns="http://www.w3.org/2000/svg">
       <title id={`${id}-t`}>{d.title}</title>
       <desc id={`${id}-d`}>{alt}</desc>
       <defs>
-        <marker id={`${id}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" class="dg-arrowhead" />
+        <marker id={`${id}-a`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" class="dg-head" />
         </marker>
       </defs>
       {d.groups.map((g) => (
-        <g>
-          <rect x={g.x} y={g.y} width={g.w} height={g.h} rx="12" class="dg-group" />
-          <text x={g.x + 12} y={g.y + 20} class="dg-group-label">{g.label}</text>
-        </g>
+        <g><rect x={g.x} y={g.y} width={g.w} height={g.h} rx="14" class="dg-group" /><text x={g.x + 14} y={g.y + 22} class="dg-group-label">{g.label}</text></g>
       ))}
-      {d.edges.map((e) => (
+      {d.edges.map((e, i) => (
         <g>
-          <path d={path(e.points)} class={e.dashed ? 'dg-edge dg-dashed' : 'dg-edge'} marker-end={`url(#${id}-arrow)`} marker-start={e.both ? `url(#${id}-arrow)` : undefined} />
+          <path d={path(e.points)} pathLength="1" class="dg-edge" style={`--i:${i}`} marker-end={`url(#${id}-a)`} marker-start={e.both ? `url(#${id}-a)` : undefined} />
           {e.label && <text x={e.labelAt![0]} y={e.labelAt![1]} class="dg-edge-label" text-anchor="middle">{e.label}</text>}
         </g>
       ))}
@@ -36,34 +34,49 @@ const path = (pts: [number, number][]) => 'M ' + pts.map((p) => p.join(' ')).joi
         const ls = lines(n.label);
         const subs = n.sub ? lines(n.sub) : [];
         const total = ls.length + subs.length;
-        const startY = n.y + n.h / 2 - ((total - 1) * 17) / 2 + 5;
+        const y0 = n.y + n.h / 2 - ((total - 1) * 17) / 2 + 5;
         return (
           <g>
-            <rect x={n.x} y={n.y} width={n.w} height={n.h} rx="8" class={`dg-node dg-${n.kind ?? 'default'}`} />
-            {ls.map((l, i) => (
-              <text x={n.x + n.w / 2} y={startY + i * 17} text-anchor="middle" class="dg-label">{l}</text>
-            ))}
-            {subs.map((sl, i) => (
-              <text x={n.x + n.w / 2} y={startY + (ls.length + i) * 17} text-anchor="middle" class="dg-sub">{sl}</text>
-            ))}
+            <rect x={n.x} y={n.y} width={n.w} height={n.h} rx="10" class={`dg-node dg-${n.kind ?? 'default'}`} />
+            {ls.map((l, i) => <text x={n.x + n.w / 2} y={y0 + i * 17} text-anchor="middle" class="dg-label">{l}</text>)}
+            {subs.map((l, i) => <text x={n.x + n.w / 2} y={y0 + (ls.length + i) * 17} text-anchor="middle" class="dg-sub">{l}</text>)}
           </g>
         );
       })}
     </svg>
   </div>
-  <figcaption>{d.caption}</figcaption>
+  <figcaption>{t('work.diagramNote')}</figcaption>
 </figure>
 
+<script>
+  // Draw the arrows once the diagram scrolls into view.
+  const figs = document.querySelectorAll<SVGElement>('svg.dg');
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    figs.forEach((f) => f.classList.add('pending'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.remove('pending'); en.target.classList.add('drawn'); io.unobserve(en.target); } });
+    }, { threshold: 0.35 });
+    figs.forEach((f) => io.observe(f));
+  }
+</script>
+
 <style>
-  svg :global(.dg-group) { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 5; }
-  svg :global(.dg-group-label) { fill: var(--muted); font-size: 13px; font-weight: 600; }
-  svg :global(.dg-node) { fill: var(--bg); stroke: var(--border); stroke-width: 1.5; }
-  svg :global(.dg-accent) { fill: var(--accent-soft); stroke: var(--accent); }
-  svg :global(.dg-io) { fill: var(--surface); stroke: var(--muted); }
-  svg :global(.dg-label) { fill: var(--text); font-size: 14px; font-weight: 600; }
-  svg :global(.dg-sub) { fill: var(--muted); font-size: 12px; }
-  svg :global(.dg-edge) { fill: none; stroke: var(--muted); stroke-width: 1.6; }
-  svg :global(.dg-dashed) { stroke-dasharray: 4 4; }
-  svg :global(.dg-arrowhead) { fill: var(--muted); }
-  svg :global(.dg-edge-label) { fill: var(--muted); font-size: 12px; }
+  .diagram { margin: 2rem 0; }
+  .scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1rem; }
+  .dg { display: block; width: 100%; min-width: 580px; height: auto; }
+  figcaption { color: var(--ink-soft); font-size: var(--step--1); margin-top: 0.6rem; }
+  .dg :global(.dg-group) { fill: none; stroke: var(--ink-soft); stroke-width: 1.2; stroke-dasharray: 5 6; }
+  .dg :global(.dg-group-label) { fill: var(--ink-soft); font: 600 13px var(--font-body); }
+  .dg :global(.dg-node) { fill: var(--paper); stroke: var(--rule); stroke-width: 1.5; }
+  .dg :global(.dg-accent) { fill: var(--blue-soft); stroke: var(--blue); }
+  .dg :global(.dg-io) { fill: var(--surface); stroke: var(--ink-soft); }
+  .dg :global(.dg-label) { fill: var(--ink); font: 600 14px var(--font-body); }
+  .dg :global(.dg-sub) { fill: var(--ink-soft); font: 400 12px var(--font-body); }
+  .dg :global(.dg-edge) { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .dg :global(.dg-head) { fill: var(--blue); }
+  .dg :global(.dg-edge-label) { fill: var(--ink-soft); font: 500 12px var(--font-body); }
+  .dg:global(.pending) :global(.dg-edge) { stroke-dashoffset: 1; }
+  .dg:global(.pending) :global(marker path) { opacity: 0; }
+  .dg:global(.drawn) :global(.dg-edge) { animation: dg-draw 0.6s ease-in-out calc(var(--i) * 0.12s) both; }
+  @keyframes dg-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 </style>

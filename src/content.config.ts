@@ -1,6 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// One file per language: src/content/case-studies/<lang>/<slug>.md
 const caseStudies = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/case-studies' }),
   schema: z.object({
@@ -23,23 +24,22 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    status: z.enum(['in progress', 'released', 'archived']),
-    summary: z.string(),
+    status: z.object({ de: z.string(), en: z.string() }),
+    summary: z.object({ de: z.string(), en: z.string() }),
     repo: z.string().url().optional(),
     // Only link the repository once it is public.
     repoPublic: z.boolean().default(false),
     stack: z.array(z.string()).default([]),
-    order: z.number().default(0),
   }),
 });
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
+    title: z.object({ de: z.string(), en: z.string() }),
+    description: z.string().optional(),
     date: z.coerce.date().optional(),
-    // Drafts are never built or listed.
+    // Drafts get no page; the home page only lists their title as "coming soon".
     draft: z.boolean().default(true),
   }),
 });

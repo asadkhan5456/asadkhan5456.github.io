@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import { useT, type Lang } from '../../i18n/ui';
+import { profile, repos } from '../../data/profile';
+import ExternalLink from '../ExternalLink.astro';
+import Icon from '../Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const projects = await getCollection('projects');
+---
+<section id="projects" class="section" aria-labelledby="projects-title">
+  <div class="wrap">
+    <div class="section-head"><h2 id="projects-title">{t('projects.title')}</h2></div>
+
+    {projects.map((p) => (
+      <article class="feature">
+        <div>
+          <p class="status"><span class="dot" aria-hidden="true"></span>{t('projects.building')}</p>
+          <h3>{p.data.title}</h3>
+          <p class="summary">{p.data.summary[lang]}</p>
+          <ul class="tags">{p.data.stack.map((s) => <li>{s}</li>)}</ul>
+          {p.data.repo && p.data.repoPublic && (
+            <p class="repo"><ExternalLink href={p.data.repo} lang={lang}>{p.data.title} {lang === 'de' ? 'auf GitHub' : 'on GitHub'}</ExternalLink></p>
+          )}
+        </div>
+      </article>
+    ))}
+
+    <div class="gh">
+      <div class="gh-head">
+        <h3><Icon name="github" />{t('projects.github')}</h3>
+        <ExternalLink class="btn" href={profile.github} lang={lang} rel="me">{t('projects.githubProfile')}</ExternalLink>
+      </div>
+      <ul class="repos">
+        {repos.map((r) => (
+          <li>
+            <ExternalLink class="repo-name marker-link" href={r.url} lang={lang} icon={false}>{r.name}</ExternalLink>
+            <p>{r.desc[lang]}</p>
+            <p class="meta">{r.stack.join(', ')}{r.older && <> · {t('projects.older')}</>}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature {
+    position: relative; overflow: hidden; border-radius: calc(var(--radius) + 6px);
+    background: var(--ink); color: var(--paper); padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+  }
+  .feature::after {
+    /* a stack of document sheets, drawn with gradients, bottom right */
+    content: ''; position: absolute; right: -40px; bottom: -60px; width: 260px; height: 300px; border-radius: 16px;
+    background:
+      linear-gradient(var(--marker), var(--marker)) 30px 70px / 120px 12px no-repeat,
+      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--paper) 22%, transparent) 0 6px, transparent 6px 22px) 30px 40px / 180px 220px no-repeat,
+      color-mix(in srgb, var(--paper) 8%, transparent);
+    transform: rotate(-8deg); pointer-events: none;
+  }
+  .feature > div { position: relative; z-index: 1; max-width: 40rem; }
+  .status { display: inline-flex; align-items: center; gap: 0.55rem; font-size: var(--step--1); font-weight: 600; color: var(--marker); margin-bottom: 0.9rem; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 0 var(--marker); animation: pulse 2.4s ease-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--marker) 70%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
+  .feature h3 { color: var(--paper); font-size: var(--step-3); letter-spacing: -0.03em; }
+  .summary { margin: 1rem 0 1.25rem; font-size: 1.1rem; color: color-mix(in srgb, var(--paper) 85%, transparent); }
+  .feature .tags { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+  .repo { margin: 1.25rem 0 0; } .repo :global(a) { color: var(--marker); }
+
+  .gh { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); }
+  .gh-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .gh-head h3 { display: inline-flex; align-items: center; gap: 0.6rem; font-size: var(--step-2); }
+  .gh-head h3 :global(svg) { width: 1.6rem; height: 1.6rem; }
+  .gh-head :global(.btn svg) { width: 0.95em; height: 0.95em; }
+  .repos { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--rule); border-block: 1px solid var(--rule); }
+  @media (min-width: 900px) { .repos { grid-template-columns: repeat(3, 1fr); } }
+  .repos li { margin: 0; background: var(--paper); padding: 1.5rem 1.5rem 1.5rem 0; }
+  @media (min-width: 900px) { .repos li { padding: 1.5rem; } .repos li:first-child { padding-left: 0; } }
+  .repos :global(.repo-name) { font-family: var(--font-display); font-weight: 650; font-size: 1.15rem; display: inline-block; margin-bottom: 0.5rem; word-break: break-word; }
+  .repos p { margin: 0 0 0.6rem; color: var(--ink-soft); }
+  .meta { font-size: var(--step--1); }
+</style>

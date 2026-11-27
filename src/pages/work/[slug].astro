@@ -1,44 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import Diagram from '../../components/Diagram.astro';
-import { t } from '../../i18n/ui';
-
+import CaseStudyPage from '../../components/CaseStudyPage.astro';
 export async function getStaticPaths() {
-  const cases = await getCollection('case-studies');
-  return cases.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+  const all = await getCollection('case-studies', (c) => c.id.startsWith('de/'));
+  return all.map((entry) => ({ params: { slug: entry.id.split('/')[1] }, props: { entry } }));
 }
-
 const { entry } = Astro.props;
-const d = entry.data;
 ---
-
-<Base title={d.title} description={d.summary} ogType="article">
-  <article class="prose">
-    <p class="eyebrow">{d.client}</p>
-    <h1>{d.title}</h1>
-    <p class="lead">{d.summary}</p>
-
-    <h2>{t('work.context')}</h2>
-    <p>{d.context}</p>
-
-    <h2>{t('work.problem')}</h2>
-    <p>{d.problem}</p>
-
-    <h2>{t('work.approach')}</h2>
-    <ul>{d.approach.map((a) => <li>{a}</li>)}</ul>
-    <Diagram name={d.diagram} alt={d.diagramAlt} />
-
-    <h2>{t('work.role')}</h2>
-    <p>{d.role}</p>
-
-    <h2>{t('work.outcome')}</h2>
-    <p>{d.outcome}</p>
-
-    <h2>{t('work.stack')}</h2>
-    <ul class="tags">{d.stack.map((s) => <li>{s}</li>)}</ul>
-
-    <p class="note">{t('work.footer')}</p>
-    <p><a href="/work/">← {t('work.back')}</a></p>
-  </article>
-</Base>
+<CaseStudyPage lang="de" entry={entry} />

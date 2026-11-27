@@ -1,0 +1,9 @@
+---
+// A link that opens in a new tab and says so to screen-reader users.
+import Icon from './Icon.astro';
+import { useT, type Lang } from '../i18n/ui';
+interface Props { href: string; lang: Lang; class?: string; icon?: boolean; rel?: string }
+const { href, lang, class: cls, icon = true, rel = '' } = Astro.props;
+const t = useT(lang);
+---
+<a href={href} class={cls} target="_blank" rel={`noopener noreferrer ${rel}`.trim()}><slot /><span class="visually-hidden"> {t('newTab')}</span>{icon && <Icon name="external" />}</a>
