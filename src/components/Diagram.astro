@@ -34,7 +34,8 @@ const path = (pts: [number, number][]) => 'M ' + pts.map((p) => p.join(' ')).joi
       ))}
       {d.nodes.map((n) => {
         const ls = lines(n.label);
-        const total = ls.length + (n.sub ? 1 : 0);
+        const subs = n.sub ? lines(n.sub) : [];
+        const total = ls.length + subs.length;
         const startY = n.y + n.h / 2 - ((total - 1) * 17) / 2 + 5;
         return (
           <g>
@@ -42,9 +43,9 @@ const path = (pts: [number, number][]) => 'M ' + pts.map((p) => p.join(' ')).joi
             {ls.map((l, i) => (
               <text x={n.x + n.w / 2} y={startY + i * 17} text-anchor="middle" class="dg-label">{l}</text>
             ))}
-            {n.sub && (
-              <text x={n.x + n.w / 2} y={startY + ls.length * 17} text-anchor="middle" class="dg-sub">{n.sub}</text>
-            )}
+            {subs.map((sl, i) => (
+              <text x={n.x + n.w / 2} y={startY + (ls.length + i) * 17} text-anchor="middle" class="dg-sub">{sl}</text>
+            ))}
           </g>
         );
       })}

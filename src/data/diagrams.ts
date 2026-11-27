@@ -41,7 +41,7 @@ export const diagrams = {
     height: 320,
     groups: [{ x: 160, y: 20, w: 584, h: 280, label: 'Kubernetes · deployed with Helm' }],
     nodes: [
-      { x: 16, y: 120, w: 124, h: 76, label: 'Documents', sub: 'PDF · Word · tables · images', kind: 'io' },
+      { x: 16, y: 120, w: 124, h: 76, label: 'Documents', sub: 'PDF · Word\ntables · images', kind: 'io' },
       { x: 190, y: 128, w: 140, h: 60, label: 'Orchestrator', kind: 'accent' },
       { x: 400, y: 55, w: 150, h: 46, label: 'MCP server', kind: 'default' },
       { x: 590, y: 50, w: 140, h: 56, label: 'Document', sub: 'conversion tool' },
@@ -51,7 +51,7 @@ export const diagrams = {
     ],
     edges: [
       { points: [[140, 158], [190, 158]] },
-      { points: [[330, 145], [365, 145], [365, 78], [400, 78]], label: 'MCP', labelAt: [386, 70], both: true },
+      { points: [[330, 145], [365, 145], [365, 78], [400, 78]], label: 'MCP', labelAt: [382, 112], both: true },
       { points: [[550, 78], [590, 78]] },
       { points: [[550, 78], [570, 78], [570, 148], [590, 148]] },
       { points: [[330, 172], [365, 172], [365, 245], [400, 245]] },
