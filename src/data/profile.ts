@@ -9,7 +9,7 @@ export const profile = {
   // Email is split so it never appears as plain text in the HTML.
   emailUser: 'asadfkhan5456',
   emailDomain: 'gmail.com',
-  cvPdf: '/cv/Asad_Faiyyaz_Khan_CV.pdf',
+  cvPdf: { de: '/cv/Asad_Faiyyaz_Khan_Lebenslauf.pdf', en: '/cv/Asad_Faiyyaz_Khan_CV.pdf' },
 };
 
 export const bio: L<string[]> = {
