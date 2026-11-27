@@ -1,4 +1,4 @@
-@import '@fontsource-variable/bricolage-grotesque/index.css';
+@import '@fontsource-variable/bricolage-grotesque/standard.css'; /* weight + width + optical size axes */
 @import '@fontsource/ibm-plex-sans/latin-400.css';
 @import '@fontsource/ibm-plex-sans/latin-500.css';
 @import '@fontsource/ibm-plex-sans/latin-600.css';
@@ -30,10 +30,10 @@
   --step-1: 1.25rem;
   --step-2: 1.6rem;
   --step-3: clamp(2rem, 1.3rem + 2.6vw, 3.1rem);
-  --step-4: clamp(3rem, 1.6rem + 6vw, 6.6rem);
+  --step-4: clamp(3.2rem, 1.4rem + 6.4vw, 8rem);
 
   --gutter: 1rem;
-  --max: 74rem;
+  --max: 84rem;
   --measure: 38rem;
   --radius: 14px;
   --radius-sm: 8px;

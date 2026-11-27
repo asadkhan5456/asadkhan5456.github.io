@@ -34,7 +34,7 @@ const switchHref = localePath(otherLang, neutral);
         <Icon name="menu" /><span>{t('nav.menu')}</span>
       </button>
       <ul id="nav-list" class="nav-list">
-        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        {links.map((l) => <li><a href={l.href} data-spy={l.href.split('#')[1]}>{l.label}</a></li>)}
         <li><a class="nav-cv" href={cvHref} aria-current={neutral === '/cv/' ? 'page' : undefined}>{t('nav.cv')}</a></li>
       </ul>
     </nav>
@@ -76,12 +76,27 @@ const switchHref = localePath(otherLang, neutral);
   });
   list?.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Highlight the section currently in view (home page only).
+  const spyLinks = new Map<string, HTMLAnchorElement>();
+  document.querySelectorAll<HTMLAnchorElement>('.nav-list a[data-spy]').forEach((a) => spyLinks.set(a.dataset.spy!, a));
+  const sections = [...spyLinks.keys()].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+  if (sections.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        spyLinks.forEach((a) => a.removeAttribute('aria-current'));
+        spyLinks.get(en.target.id)?.setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach((s) => io.observe(s));
+  }
 </script>
 
 <style>
   .site-header {
     position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    background: color-mix(in srgb, var(--paper) 95%, transparent);
     backdrop-filter: saturate(1.4) blur(12px);
     -webkit-backdrop-filter: saturate(1.4) blur(12px);
     border-bottom: 1px solid var(--rule);
@@ -140,5 +155,13 @@ const switchHref = localePath(otherLang, neutral);
     }
     .nav-list a { font-size: 0.95rem; padding: 0 0.7rem; }
     .nav-list a:hover { background: none; color: var(--blue); }
+    .nav-list a[data-spy] { position: relative; }
+    .nav-list a[data-spy]::after {
+      content: ''; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 9px; height: 0.38em; z-index: -1;
+      background: var(--marker); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
+    }
+    .nav-list a[aria-current='true'] { color: var(--ink); }
+    .nav-list a[aria-current='true']::after { transform: scaleX(1); }
+    :global(:root[data-theme='dark']) .nav-list a[aria-current='true'] { color: var(--ink); }
   }
 </style>
