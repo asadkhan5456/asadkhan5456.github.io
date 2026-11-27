@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Asad Faiyyaz Khan – CV</title>
+<meta name="author" content="Asad Faiyyaz Khan">
+<meta name="description" content="CV of Asad Faiyyaz Khan, AI Engineer – Agentic Systems &amp; LLMs">
+<meta name="keywords" content="AI Engineer, Agentic AI, LLM, MCP, Azure, Python">
+<style>
+  /* Public, general CV. No photo, street address, date of birth or phone number. */
+  @font-face { font-family: 'Inter'; src: url('fonts/inter-latin-400-normal.woff') format('woff'); font-weight: 400; }
+  @font-face { font-family: 'Inter'; src: url('fonts/inter-latin-600-normal.woff') format('woff'); font-weight: 600; }
+  @font-face { font-family: 'Inter'; src: url('fonts/inter-latin-700-normal.woff') format('woff'); font-weight: 700; }
+
+  @page {
+    size: A4;
+    margin: 15mm 17mm 15mm 17mm;
+    @bottom-right { content: counter(page) " / " counter(pages); font-family: 'Inter'; font-size: 8pt; color: #555; }
+  }
+  html { font-family: 'Inter', sans-serif; font-size: 9.5pt; line-height: 1.38; color: #1a1a1a;
+         font-variant-ligatures: none; font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "calt" 0; }
+  body { margin: 0; }
+  h1 { font-size: 19pt; font-weight: 700; margin: 0 0 1pt; }
+  .headline { font-size: 11pt; font-weight: 600; color: #0b6b62; margin: 0 0 4pt; }
+  .contact { margin: 0 0 8pt; color: #333; }
+  .contact a { color: #333; text-decoration: none; }
+  h2 { font-size: 11pt; font-weight: 700; color: #0b6b62; margin: 11pt 0 4pt; padding-bottom: 2pt; border-bottom: 0.6pt solid #b9c9c6; }
+  h3 { font-size: 9.5pt; font-weight: 600; margin: 0; }
+  p { margin: 0 0 4pt; }
+  .job { margin: 0 0 8pt; }
+  .job, li { break-inside: avoid; }
+  .meta { color: #444; margin: 0 0 2pt; }
+  ul { margin: 2pt 0 0; padding-left: 11pt; }
+  li { margin: 0 0 2pt; }
+  .skills { break-inside: avoid; }
+  .skills p { margin: 0 0 3pt; }
+  .label { font-weight: 600; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Asad Faiyyaz Khan</h1>
+    <p class="headline">AI Engineer – Agentic Systems &amp; LLMs</p>
+    <p class="contact">Aalen, Germany · <a href="mailto:asadfkhan5456@gmail.com">asadfkhan5456@gmail.com</a> · <a href="https://www.linkedin.com/in/ak54/">linkedin.com/in/ak54</a> · <a href="https://asadkhan5456.github.io">asadkhan5456.github.io</a></p>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p>AI Engineer and Solution Architect building agentic AI systems for enterprise clients. I design and deliver multi-agent document-processing systems, Model Context Protocol (MCP) tool integrations and the data pipelines behind them, from architecture to production on Microsoft Azure. As main developer and client contact, I translate business needs into working solutions and advise on architecture, cloud services and quality evaluation. Earlier, I built a multilingual voice assistant on Azure OpenAI for industrial machines at Albert Handtmann.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <h3>Senior AI Engineer (Solution Architect – Data &amp; AI)</h3>
+      <p class="meta">PlanB GmbH · 02/2026 – present</p>
+      <ul>
+        <li>Main developer and client contact across several client projects; advise on solution architecture, Azure service selection and AI quality evaluation within client security requirements such as tenant restrictions and access control.</li>
+        <li>Designed, built and deployed a production multi-agent system that turns PDF documents into structured data, with Apache Kafka between components, hosted on Azure.</li>
+        <li>Designed and developed multi-agent document processing for complex documents (PDF, Word, tables, images), exposing conversion and extraction as tools via MCP; built validation and evaluation of agent output; deployed on Kubernetes with Helm.</li>
+        <li>Developed metadata-driven Python/PySpark pipelines in Microsoft Fabric (Lakehouse, Delta Lake) integrating many data sources, with ontology-based standardization for AI/ML use cases.</li>
+        <li>Designing the target Azure architecture for a cloud migration of an AI platform, including service selection, sizing and migration planning.</li>
+        <li>Onboarded and guided a new colleague; support apprentices.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Development Engineer (AI Engineer)</h3>
+      <p class="meta">Albert Handtmann Maschinenfabrik GmbH &amp; Co. KG, Biberach · 06/2023 – 08/2025</p>
+      <ul>
+        <li>Developed a multilingual voice assistant for filling and portioning machines with Azure OpenAI GPT models and Whisper, tested in production at customer sites.</li>
+        <li>Built MLOps infrastructure on Azure with CI/CD for automated model validation and deployment.</li>
+        <li>Integrated ML models into real-time production processes to analyze machine parameters; engineered features and monitored deployed models.</li>
+        <li>Worked with developers, production managers and stakeholders from requirements to delivery; supported interns.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Master's Thesis – AI-Based Process Monitoring</h3>
+      <p class="meta">Albert Handtmann · 11/2022 – 05/2023</p>
+      <p>ML-based process monitoring predicting product quality, deployed on Azure with CI/CD for retraining.</p>
+    </div>
+
+    <div class="job">
+      <h3>Data Scientist Intern</h3>
+      <p class="meta">Keysight Technologies, Böblingen · 03/2022 – 07/2022</p>
+      <p>ML-based analytics tool with automated data pipelines.</p>
+    </div>
+
+    <div class="job">
+      <h3>Data Analyst Intern (NLP)</h3>
+      <p class="meta">Magnificent Data GmbH, Schönefeld · 10/2021 – 01/2022</p>
+      <p>Transformer-based chatbots for customer feedback analysis.</p>
+    </div>
+  </section>
+
+  <!-- Projects: DokuPilot is left out until github.com/asadkhan5456/dokupilot is public. TODO(asad) -->
+
+  <section class="skills">
+    <h2>Skills</h2>
+    <p><span class="label">Agentic AI &amp; LLMs:</span> multi-agent systems, MCP / FastMCP, tool calling, LangGraph, Azure OpenAI, document intelligence, structured extraction, agent output evaluation</p>
+    <p><span class="label">Engineering &amp; DevOps:</span> Python, FastAPI, Docker, Kubernetes, Helm, CI/CD, Git/GitHub, Apache Kafka, Airflow, AI-assisted development</p>
+    <p><span class="label">Cloud &amp; Data:</span> Microsoft Azure, Azure AI Foundry, Microsoft Fabric (Lakehouse, Delta Lake), PySpark, SQL</p>
+    <p><span class="label">Machine Learning:</span> PyTorch, scikit-learn, Hugging Face, NLP, MLOps, model monitoring</p>
+    <p><span class="label">Consulting:</span> requirements analysis, solution architecture, client advisory</p>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <p><span class="label">M.Sc. Information and Electrical Engineering</span>, Hochschule Wismar, 09/2019 – 05/2023</p>
+    <p><span class="label">B.E. Mechanical Engineering</span>, University of Pune, 07/2015 – 06/2018</p>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p>English C1 · German B1 (improving)</p>
+  </section>
+</body>
+</html>
