@@ -1,0 +1,35 @@
+---
+import { t, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+
+<button type="button" class="theme-toggle" aria-label={t('theme.toggle', lang)} aria-pressed="false">
+  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path class="moon" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+  </svg>
+</button>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const root = document.documentElement;
+  const isDark = () =>
+    root.dataset.theme ? root.dataset.theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const sync = () => btn?.setAttribute('aria-pressed', String(isDark()));
+  sync();
+  btn?.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    sync();
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 8px;
+    background: transparent; color: var(--muted); border: 1px solid var(--border); cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--muted); }
+</style>

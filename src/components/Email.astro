@@ -1,0 +1,23 @@
+---
+// Renders the email address without putting it in the HTML as plain text.
+// The address is assembled in the browser; without JavaScript a readable "at/dot" form is shown.
+import { profile } from '../data/profile';
+const user = [...profile.emailUser].reverse().join('');
+const domain = [...profile.emailDomain].reverse().join('');
+const fallback = `${profile.emailUser} [at] ${profile.emailDomain.replace('.', ' [dot] ')}`;
+---
+
+<span class="email" data-u={user} data-d={domain}>{fallback}</span>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.email[data-u]').forEach((el) => {
+    const u = [...(el.dataset.u ?? '')].reverse().join('');
+    const d = [...(el.dataset.d ?? '')].reverse().join('');
+    const a = document.createElement('a');
+    a.href = 'mailto:' + u + '@' + d;
+    a.textContent = u + '@' + d;
+    el.replaceChildren(a);
+    el.removeAttribute('data-u');
+    el.removeAttribute('data-d');
+  });
+</script>

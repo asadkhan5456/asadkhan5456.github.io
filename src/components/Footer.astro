@@ -1,0 +1,27 @@
+---
+import { t, type Lang } from '../i18n/ui';
+import { profile } from '../data/profile';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container row">
+    <p>© {year} {t('site.name', lang)} · Aalen, Germany</p>
+    <ul>
+      <li><a href={profile.linkedin} rel="me">LinkedIn</a></li>
+      <li><a href={profile.github} rel="me">GitHub</a></li>
+      <li><a href="/contact/">{t('nav.contact', lang)}</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--border); padding: 1.5rem 0; font-size: 0.92rem; color: var(--muted); }
+  .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; align-items: center; }
+  p { margin: 0; }
+  ul { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+  li { margin: 0; }
+  a { display: inline-flex; align-items: center; min-height: 44px; }
+</style>

@@ -1,0 +1,52 @@
+---
+import { t, type Lang } from '../i18n/ui';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const links = [
+  { href: '/work/', label: t('nav.work', lang) },
+  { href: '/projects/', label: t('nav.projects', lang) },
+  { href: '/writing/', label: t('nav.writing', lang) },
+  { href: '/about/', label: t('nav.about', lang) },
+  { href: '/cv/', label: t('nav.cv', lang) },
+  { href: '/contact/', label: t('nav.contact', lang) },
+];
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/" aria-current={path === '/' ? 'page' : undefined}>{t('site.name', lang)}</a>
+    <nav aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <ThemeToggle lang={lang} />
+  </div>
+</header>
+
+<style>
+  .site-header { border-bottom: 1px solid var(--border); }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .brand { font-weight: 700; color: var(--text); text-decoration: none; margin-right: auto; padding: 0.5rem 0; }
+  .brand:hover { color: var(--accent); }
+  nav { order: 3; width: 100%; }
+  ul { display: flex; flex-wrap: wrap; gap: 0 0.25rem; list-style: none; margin: 0; padding: 0; }
+  li { margin: 0; }
+  nav a {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.55rem;
+    color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; border-radius: 6px;
+  }
+  nav li:first-child a { padding-left: 0; }
+  nav a:hover { color: var(--text); }
+  nav a[aria-current='page'] { color: var(--accent); }
+  @media (min-width: 820px) {
+    nav { order: 0; width: auto; }
+    nav li:first-child a { padding-left: 0.55rem; }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n/ui';
+import { bio, experience, education, languages, skills } from '../data/profile';
+// TODO(asad): optional small profile photo. Add it to src/assets/ and render it here with <Image> and a real alt text.
+---
+
+<Base title={t('about.title')} description="About Asad Faiyyaz Khan: experience, education, languages and skills.">
+  <div class="prose">
+    <h1>{t('about.title')}</h1>
+    {bio.map((p) => <p>{p}</p>)}
+
+    <h2>{t('about.experience')}</h2>
+    <ol class="timeline">
+      {experience.map((e) => (
+        <li>
+          <div class="when">{e.dates}</div>
+          <div class="what">{e.title}</div>
+          <div class="muted">{e.org}</div>
+          {e.summary && <p class="summary">{e.summary}</p>}
+        </li>
+      ))}
+    </ol>
+
+    <h2>{t('about.education')}</h2>
+    <ul class="plain">
+      {education.map((e) => (
+        <li><strong>{e.degree}</strong><br /><span class="muted">{e.school} · {e.dates}</span></li>
+      ))}
+    </ul>
+
+    <h2>{t('about.languages')}</h2>
+    <ul class="plain">{languages.map((l) => <li>{l.name} · {l.level}</li>)}</ul>
+
+    <h2>{t('about.skills')}</h2>
+    <dl class="skills">
+      {skills.map((s) => (
+        <div>
+          <dt>{s.area}</dt>
+          <dd><ul class="tags">{s.items.map((i) => <li>{i}</li>)}</ul></dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</Base>
+
+<style>
+  .plain { list-style: none; padding: 0; }
+  .plain li { margin-bottom: 0.8rem; }
+  .summary { margin: 0.3rem 0 0; }
+  dl.skills .tags { margin-top: 0.3rem; }
+</style>

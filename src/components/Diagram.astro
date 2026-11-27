@@ -1,0 +1,68 @@
+---
+import { diagrams, type DiagramKey } from '../data/diagrams';
+
+interface Props { name: DiagramKey; alt: string }
+const { name, alt } = Astro.props;
+const d = diagrams[name];
+const id = `dg-${name}`;
+
+const lines = (label: string) => label.split('\n');
+const path = (pts: [number, number][]) => 'M ' + pts.map((p) => p.join(' ')).join(' L ');
+---
+
+<figure class="diagram">
+  <div class="scroll">
+    <svg viewBox={`0 0 ${d.width} ${d.height}`} role="img" aria-labelledby={`${id}-t ${id}-d`} xmlns="http://www.w3.org/2000/svg">
+      <title id={`${id}-t`}>{d.title}</title>
+      <desc id={`${id}-d`}>{alt}</desc>
+      <defs>
+        <marker id={`${id}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" class="dg-arrowhead" />
+        </marker>
+      </defs>
+      {d.groups.map((g) => (
+        <g>
+          <rect x={g.x} y={g.y} width={g.w} height={g.h} rx="12" class="dg-group" />
+          <text x={g.x + 12} y={g.y + 20} class="dg-group-label">{g.label}</text>
+        </g>
+      ))}
+      {d.edges.map((e) => (
+        <g>
+          <path d={path(e.points)} class={e.dashed ? 'dg-edge dg-dashed' : 'dg-edge'} marker-end={`url(#${id}-arrow)`} marker-start={e.both ? `url(#${id}-arrow)` : undefined} />
+          {e.label && <text x={e.labelAt![0]} y={e.labelAt![1]} class="dg-edge-label" text-anchor="middle">{e.label}</text>}
+        </g>
+      ))}
+      {d.nodes.map((n) => {
+        const ls = lines(n.label);
+        const total = ls.length + (n.sub ? 1 : 0);
+        const startY = n.y + n.h / 2 - ((total - 1) * 17) / 2 + 5;
+        return (
+          <g>
+            <rect x={n.x} y={n.y} width={n.w} height={n.h} rx="8" class={`dg-node dg-${n.kind ?? 'default'}`} />
+            {ls.map((l, i) => (
+              <text x={n.x + n.w / 2} y={startY + i * 17} text-anchor="middle" class="dg-label">{l}</text>
+            ))}
+            {n.sub && (
+              <text x={n.x + n.w / 2} y={startY + ls.length * 17} text-anchor="middle" class="dg-sub">{n.sub}</text>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  </div>
+  <figcaption>{d.caption}</figcaption>
+</figure>
+
+<style>
+  svg :global(.dg-group) { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 5; }
+  svg :global(.dg-group-label) { fill: var(--muted); font-size: 13px; font-weight: 600; }
+  svg :global(.dg-node) { fill: var(--bg); stroke: var(--border); stroke-width: 1.5; }
+  svg :global(.dg-accent) { fill: var(--accent-soft); stroke: var(--accent); }
+  svg :global(.dg-io) { fill: var(--surface); stroke: var(--muted); }
+  svg :global(.dg-label) { fill: var(--text); font-size: 14px; font-weight: 600; }
+  svg :global(.dg-sub) { fill: var(--muted); font-size: 12px; }
+  svg :global(.dg-edge) { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+  svg :global(.dg-dashed) { stroke-dasharray: 4 4; }
+  svg :global(.dg-arrowhead) { fill: var(--muted); }
+  svg :global(.dg-edge-label) { fill: var(--muted); font-size: 12px; }
+</style>
