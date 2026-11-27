@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import CaseCard from '../components/CaseCard.astro';
+import { t } from '../i18n/ui';
+import { profile } from '../data/profile';
+
+const cases = (await getCollection('case-studies')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const building = projects.find((p) => p.data.status === 'in progress');
+---
+
+<Base>
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">{t('site.name')}</h1>
+    <p class="role">{t('site.role')}</p>
+    <p class="lead">{t('home.intro')}</p>
+    <p class="muted">{t('home.location')}</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href={profile.cvPath} download>{t('home.cv')}</a>
+      <a class="btn btn-secondary" href={profile.linkedin} rel="me">{t('home.linkedin')}</a>
+    </div>
+  </section>
+
+  <section aria-labelledby="selected">
+    <h2 id="selected">{t('home.selected')}</h2>
+    <div class="grid grid-2">
+      {cases.map((c) => (
+        <CaseCard href={`/work/${c.id}/`} title={c.data.title} client={c.data.client} summary={c.data.summary} />
+      ))}
+    </div>
+    <p class="more"><a href="/work/">{t('home.allWork')} →</a></p>
+  </section>
+
+  {building && (
+    <section aria-labelledby="building">
+      <h2 id="building">{t('home.building')}</h2>
+      <a class="card" href="/projects/">
+        <p class="meta"><span class="badge">{building.data.status}</span></p>
+        <h3>{building.data.title}</h3>
+        <p>{building.data.summary}</p>
+      </a>
+    </section>
+  )}
+</Base>
+
+<style>
+  .hero { padding-bottom: 1rem; }
+  .role { font-size: 1.15rem; font-weight: 600; color: var(--accent); margin-bottom: 1.25rem; }
+  .more { margin-top: 1rem; }
+</style>

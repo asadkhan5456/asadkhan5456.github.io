@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n/ui';
+---
+
+<Base title={t('notfound.title')}>
+  <h1>{t('notfound.title')}</h1>
+  <p class="lead">{t('notfound.body')}</p>
+  <p><a href="/">{t('notfound.home')}</a></p>
+</Base>
