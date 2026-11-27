@@ -25,6 +25,7 @@ const ogImage = new URL(lang === 'de' ? '/og-de.png' : '/og-en.png', Astro.site)
     <link rel="alternate" hreflang="de" href={alt('de')} />
     <link rel="alternate" hreflang="en" href={alt('en')} />
     <link rel="alternate" hreflang="x-default" href={alt('de')} />
+    <link rel="preload" href="/fonts/bricolage-display.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="author" content="Asad Faiyyaz Khan" />

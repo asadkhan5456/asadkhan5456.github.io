@@ -29,7 +29,7 @@ const otherLang = lang === 'de' ? 'en' : 'de';
       {pages.map((n) => (
         <li>
           <a href={pdf} target="_blank" rel="noopener" class="page">
-            <img src={`/cv/preview-${lang}-${n}.webp`} width="1191" height="1684" alt={`${t('cv.pageAlt')} ${n}`} loading={n === 1 ? 'eager' : 'lazy'} decoding="async" />
+            <img src={`/cv/preview-${lang}-${n}-800.webp`} srcset={`/cv/preview-${lang}-${n}-800.webp 800w, /cv/preview-${lang}-${n}.webp 1191w`} sizes="(min-width: 900px) 42vw, 92vw" width="1191" height="1684" alt={`${t('cv.pageAlt')} ${n}`} loading={n === 1 ? 'eager' : 'lazy'} fetchpriority={n === 1 ? 'high' : undefined} decoding="async" />
           </a>
           <p class="pn">{t('cv.page')} {n} / {pages.length}</p>
         </li>

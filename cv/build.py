@@ -31,5 +31,8 @@ for lang, src, out in CVS:
         for png in sorted(Path(tmp).glob("p-*.png")):
             n = int(png.stem.split("-")[1])
             dest = OUT_DIR / f"preview-{lang}-{n}.webp"
-            Image.open(png).convert("RGB").save(dest, "WEBP", quality=82, method=6)
-            print(f"wrote {dest.relative_to(ROOT)}")
+            img = Image.open(png).convert("RGB")
+            img.save(dest, "WEBP", quality=82, method=6)
+            small = OUT_DIR / f"preview-{lang}-{n}-800.webp"
+            img.resize((800, round(img.height * 800 / img.width)), Image.LANCZOS).save(small, "WEBP", quality=68, method=6)
+            print(f"wrote {dest.relative_to(ROOT)} and {small.name}")

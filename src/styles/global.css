@@ -1,4 +1,10 @@
-@import '@fontsource-variable/bricolage-grotesque/standard.css'; /* weight + width + optical size axes */
+/* Display face: Bricolage Grotesque (OFL), subset to Latin + German, weight 600–800, width 75–100,
+   optical size pinned for large type. Built from @fontsource-variable/bricolage-grotesque. */
+@font-face {
+  font-family: 'Bricolage Grotesque Variable';
+  src: url('/fonts/bricolage-display.woff2') format('woff2-variations'), url('/fonts/bricolage-display.woff2') format('woff2');
+  font-weight: 600 800; font-stretch: 75% 100%; font-style: normal; font-display: swap;
+}
 @import '@fontsource/ibm-plex-sans/latin-400.css';
 @import '@fontsource/ibm-plex-sans/latin-500.css';
 @import '@fontsource/ibm-plex-sans/latin-600.css';
